@@ -1,0 +1,23 @@
+From 1adfff99c105c6b0f90d7e77650be6797fffd000 Mon Sep 17 00:00:00 2001
+From: srcnert <sercanerat@gmail.com>
+Date: Fri, 13 Dec 2024 16:10:21 +0300
+Subject: [PATCH 5/6] Fixing apollo3 gpio problem
+
+---
+ drivers/gpio/Kconfig.ambiq | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/drivers/gpio/Kconfig.ambiq b/drivers/gpio/Kconfig.ambiq
+index 924028e6f27..12ac7a17acf 100644
+--- a/drivers/gpio/Kconfig.ambiq
++++ b/drivers/gpio/Kconfig.ambiq
+@@ -10,5 +10,6 @@ config GPIO_AMBIQ
+ 	default y
+ 	depends on DT_HAS_AMBIQ_GPIO_ENABLED
+ 	select AMBIQ_HAL
++	select AMBIQ_HAL_USE_GPIO
+ 	help
+ 	  Enable driver for Ambiq gpio.
+-- 
+2.45.0
+

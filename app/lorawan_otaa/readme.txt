@@ -1,0 +1,1 @@
+It is not possible to compile mcuboot for rak3172 due to low flash area.

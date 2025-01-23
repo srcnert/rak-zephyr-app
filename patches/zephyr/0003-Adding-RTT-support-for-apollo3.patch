@@ -1,0 +1,21 @@
+From ef646efc83251e0a5c3691b9713412ce4efacf5b Mon Sep 17 00:00:00 2001
+From: srcnert <sercanerat@gmail.com>
+Date: Fri, 13 Dec 2024 16:08:25 +0300
+Subject: [PATCH 3/6] Adding RTT support for apollo3
+
+---
+ soc/ambiq/apollo3x/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/soc/ambiq/apollo3x/Kconfig b/soc/ambiq/apollo3x/Kconfig
+index 02bf72024a9..96ace49c17a 100644
+--- a/soc/ambiq/apollo3x/Kconfig
++++ b/soc/ambiq/apollo3x/Kconfig
+@@ -12,3 +12,4 @@ config SOC_SERIES_APOLLO3X
+ 	select AMBIQ_HAL
+ 	select HAS_PM
+ 	select SOC_EARLY_INIT_HOOK
++	select HAS_SEGGER_RTT if ZEPHYR_SEGGER_MODULE
+-- 
+2.45.0
+

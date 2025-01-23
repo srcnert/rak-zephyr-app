@@ -1,0 +1,42 @@
+/ {
+	chosen {
+		zephyr,console = &lpuart1;
+		zephyr,shell-uart = &lpuart1;
+	};
+
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+	};
+};
+
+&usart1 {
+	status = "disabled";
+};
+
+&usart2 {
+	status = "disabled";
+};
+
+&lpuart1 {
+	pinctrl-0 = <&lpuart1_tx_pa2 &lpuart1_rx_pa3>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
+
+// &pinctrl {
+// 	// If you are using breakout board of RAK3172, please be awera that,
+// 	// PA3 pin must be setted with pull-up!
+// 	lpuart1_rx_pa3: lpuart1_rx_pa3 {
+// 		bias-pull-up;
+// 	};
+// };
+
+&subghzspi {
+	lora: radio@0 {
+		// Select this value according to your board!!!
+		// power-amplifier-output = "rfo-lp";
+		power-amplifier-output = "rfo-hp";
+	};
+};

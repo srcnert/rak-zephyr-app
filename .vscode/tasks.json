@@ -1,0 +1,120 @@
+{
+    "version": "2.0.0",
+    "options": {
+        "env": {
+            "ZEPHYR_BASE": "${config:ZEPHYR_BASE}",
+            "ZEPHYR_TOOLCHAIN_VARIANT": "${config:ZEPHYR_TOOLCHAIN_VARIANT}",
+            "ZEPHYR_SDK_INSTALL_DIR": "${config:ZEPHYR_SDK_INSTALL_DIR}",
+        },
+    },
+    "tasks": [
+        {
+            "options": {
+                "cwd": "${input:assign_project}",
+            },
+            "label": "build",
+            "type": "shell",
+            "command": "west",
+            "args": ["build", 
+                     "-b", "${input:board_select}",
+                     "${input:build_type}",
+                     "--",
+                     "-DEXTRA_CONF_FILE=\"",
+                     "${input:board_conf_ble}",
+                     "${input:board_conf_mcuboot}",
+                     "${input:board_conf_sleep}", 
+                     "\""
+                    ],
+            /* You can create your custom command! */
+            // "args": ["build", 
+            //         "-b", "rak4631",
+            //         "--sysbuild",
+            //         "--",
+            //         "-DEXTRA_CONF_FILE=\"overlay_ble.conf;overlay_mcuboot.conf;overlay_sleep_rak4631.conf\""
+            //        ],
+            "problemMatcher": ["$gcc"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "options": {
+                "cwd": "${input:assign_project}",
+            },
+            "label": "build_clean",
+            "type": "shell",
+            "windows":{
+                "command": "rm -r build",
+            },
+            "osx":{
+                "command": "rm -rf build",
+            },
+            "problemMatcher": ["$gcc"],
+        },
+        {
+            "options": {
+                "cwd": "${input:assign_project}",
+            },
+            "label": "flash",
+            "type": "shell",
+            "command": "west",
+            "args": ["flash", "--runner", "jlink"],
+            "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "patch",
+            "type": "shell",
+            "command": "west",
+            "args": ["patch"],
+            "problemMatcher": ["$gcc"]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "board_select",
+            "type": "pickString",
+            "description": "Select the board:",
+            "options": ["rak3172", "rak4631", "rak11720"]
+        },
+        {
+            "id": "build_type",
+            "type": "pickString",
+            "description": "Select the build type:",
+            "options": ["--sysbuild", "--no-sysbuild"]
+        },
+        {
+            "id": "board_conf_ble",
+            "type": "pickString",
+            "description": "Select the ble overlay:",
+            "options": ["overlay_ble.conf", "no_overlay.conf"],
+        },
+        {
+            "id": "board_conf_mcuboot",
+            "type": "pickString",
+            "description": "Select the mcuboot overlay:",
+            "options": ["overlay_mcuboot.conf", "no_overlay.conf"],
+        },
+        {
+            "id": "board_conf_sleep",
+            "type": "pickString",
+            "description": "Select the sleep overlay:",
+            "options": ["overlay_sleep_rak3172.conf", 
+                        "overlay_sleep_rak4631.conf",
+                        "overlay_sleep_rak11720.conf",
+                        "no_overlay.conf"],
+        },
+        {
+            "id": "assign_project",
+            "type": "pickString",
+            "description": "Select the project:",
+            "options": ["app/adc",
+                        "app/blinky",
+                        "app/dfu",
+                        "app/hello_world",
+                        "app/lorawan_otaa",
+                        "app/shtc3",
+                        "app/sleep_test"]
+        }
+      ]
+}

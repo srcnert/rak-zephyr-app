@@ -1,0 +1,30 @@
+/ {
+	zephyr,user {
+		io-channels = <&adc0 8>; // P13
+	};
+};
+
+&adc0 {
+	status = "okay";
+	compatible = "ambiq,adc";
+	pinctrl-0 = <&adc0_default>;
+	pinctrl-names = "default";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	channel@8 {
+		reg = <8>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+};
+
+&pinctrl {
+	adc0_default: adc0_default{
+		group1 {
+			pinmux = <ADCD0PSE8_P13>;
+			drive-strength = "0.1";
+		};
+	};
+};

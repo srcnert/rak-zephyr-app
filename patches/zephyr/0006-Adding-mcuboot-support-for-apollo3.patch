@@ -1,0 +1,121 @@
+From 8c267cb03bd757ca8443cae639d11c1804d023fb Mon Sep 17 00:00:00 2001
+From: srcnert <sercanerat@gmail.com>
+Date: Fri, 13 Dec 2024 16:13:02 +0300
+Subject: [PATCH 6/6] Adding mcuboot support for apollo3
+
+---
+ boards/rakwireless/rak11720/rak11720.dts      | 29 +++++++++++++++++--
+ dts/arm/ambiq/ambiq_apollo3_blue.dtsi         |  8 ++---
+ .../apollo3x/Kconfig.defconfig.apollo3_blue   |  7 +++++
+ 3 files changed, 37 insertions(+), 7 deletions(-)
+
+diff --git a/boards/rakwireless/rak11720/rak11720.dts b/boards/rakwireless/rak11720/rak11720.dts
+index 4f4f75d7ff2..4b74b041e9a 100644
+--- a/boards/rakwireless/rak11720/rak11720.dts
++++ b/boards/rakwireless/rak11720/rak11720.dts
+@@ -8,6 +8,7 @@
+ #include <ambiq/ambiq_apollo3_blue.dtsi>
+ #include <zephyr/dt-bindings/lora/sx126x.h>
+ #include "rak11720_apollo3-pinctrl.dtsi"
++#include <zephyr/dt-bindings/input/input-event-codes.h>
+ 
+ / {
+ 	model = "RAKwireless RAK11720 WisBlock LPWAN Module";
+@@ -19,9 +20,11 @@
+ 		zephyr,flash = &flash0;
+ 		zephyr,console = &uart0;
+ 		zephyr,shell-uart = &uart0;
++		zephyr,uart-mcumgr = &uart0;
+ 		zephyr,uart-pipe = &uart0;
+ 		zephyr,flash-controller = &flash;
+ 		zephyr,bt_hci = &bt_hci_apollo;
++		zephyr,code-partition = &slot0_partition;
+ 	};
+ 
+ 	aliases {
+@@ -29,6 +32,8 @@
+ 		led0 = &blue_led;
+ 		led1 = &green_led;
+ 		lora0 = &lora;
++		bootloader-led0 = &blue_led;
++		mcuboot-led0 = &blue_led;
+ 	};
+ 
+ 	leds {
+@@ -53,10 +58,28 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <1>;
+ 
+-		/* Set 16KB of storage at the end of the 976KB of flash */
+-		storage_partition: partition@f0000 {
++		internal_boot_partition: partition@0 {
++			label = "internal_bootloader";
++			reg = <0x00000000 0xc000>;
++		};
++
++		boot_partition: partition@c000 {
++			label = "mcuboot";
++			reg = <0x0000c000 0xc000>;
++		};
++		slot0_partition: partition@18000 {
++			label = "image-0";
++			reg = <0x00018000 0x72000>;
++		};
++		slot1_partition: partition@8a000 {
++			label = "image-1";
++			reg = <0x0008a000 0x72000>;
++		};
++
++		/* Set 16KB of storage at the end of the 1024KB of flash */
++		storage_partition: partition@fc000 {
+ 			label = "storage";
+-			reg = <0x000f0000 0x4000>;
++			reg = <0x000fc000 0x4000>;
+ 		};
+ 	};
+ };
+diff --git a/dts/arm/ambiq/ambiq_apollo3_blue.dtsi b/dts/arm/ambiq/ambiq_apollo3_blue.dtsi
+index 14760d737b1..be5f80f87ff 100644
+--- a/dts/arm/ambiq/ambiq_apollo3_blue.dtsi
++++ b/dts/arm/ambiq/ambiq_apollo3_blue.dtsi
+@@ -68,17 +68,17 @@
+ 	soc {
+ 		compatible = "ambiq,apollo3-blue", "ambiq,apollo3x", "simple-bus";
+ 
+-		flash: flash-controller@c000 {
++		flash: flash-controller@0 {
+ 			compatible = "ambiq,flash-controller";
+-			reg = <0x0000c000 0xf4000>;
++			reg = <0x00000000 0x100000>;
+ 
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+ 
+ 			/* Flash region */
+-			flash0: flash@c000 {
++			flash0: flash@0 {
+ 				compatible = "soc-nv-flash";
+-				reg = <0x0000c000 0xf4000>;
++				reg = <0x00000000 0x100000>;
+ 			};
+ 		};
+ 
+diff --git a/soc/ambiq/apollo3x/Kconfig.defconfig.apollo3_blue b/soc/ambiq/apollo3x/Kconfig.defconfig.apollo3_blue
+index 4a1b3020553..ca99e2af30d 100644
+--- a/soc/ambiq/apollo3x/Kconfig.defconfig.apollo3_blue
++++ b/soc/ambiq/apollo3x/Kconfig.defconfig.apollo3_blue
+@@ -37,4 +37,11 @@ config BT_HCI_ACL_FLOW_CONTROL
+ 
+ endif # BT
+ 
++if !BOOTLOADER_MCUBOOT
++
++config FLASH_LOAD_OFFSET
++	default 0xc000
++
++endif # !BOOTLOADER_MCUBOOT
++
+ endif # SOC_APOLLO3_BLUE
+-- 
+2.45.0
+

@@ -1,0 +1,16 @@
+{
+    "configurations": [
+        {
+            "name": "RAKwireless",
+            "includePath": [
+                "${config:ZEPHYR_WORKSPACE}/zephyr",
+                "${config:ZEPHYR_WORKSPACE}/zephyr/include"
+            ],
+            "compilerPath": "${config:ZEPHYR_SDK_INSTALL_DIR}/arm-zephyr-eabi/bin/arm-zephyr-eabi-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "configurationProvider": "Sercan ERAT"
+        }
+    ],
+    "version": 4
+}

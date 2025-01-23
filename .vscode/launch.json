@@ -1,0 +1,62 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cortex Debug",
+            "executable": "${input:assign_project}",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "jlink",
+            "windows":{
+                "serverpath": "${config:JLINK_PATH}/JLinkGDBServerCL.exe",
+            },
+            "osx":{
+                "serverpath": "${config:JLINK_PATH}/JLinkGDBServerCLExe",
+            },
+            "runToEntryPoint": "main",
+            "serialNumber": "",
+            "device": "${input:mcu_select}",
+            "svdFile": "",
+            "interface": "swd",
+            "armToolchainPath": "${config:ZEPHYR_SDK_INSTALL_DIR}/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
+            "rtos": "Zephyr",
+            "liveWatch": {
+                "enabled": true,
+                "samplesPerSecond": 4
+            },
+            "rttConfig": {
+                "enabled": true,
+                "address": "auto",
+                "decoders": [
+                    {
+                        "label": "",
+                        "port": 0,
+                        "type": "console",
+                        "timestamp": false
+                    }
+                ]
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "mcu_select",
+            "type": "pickString",
+            "description": "Select the MCU will be debug:",
+            "options": ["STM32WLE5CC", "NRF52840_XXAA", "AMA3B1KK-KBR"]
+        },
+        {
+            "id": "assign_project",
+            "type": "pickString",
+            "description": "Select the project:",
+            "options": ["app/adc/build/zephyr/zephyr.elf",
+                        "app/blinky/build/zephyr/zephyr.elf",
+                        "app/dfu/build/zephyr/zephyr.elf",
+                        "app/hello_world/build/zephyr/zephyr.elf",
+                        "app/lorawan_otaa/build/zephyr/zephyr.elf",
+                        "app/shtc3/build/zephyr/zephyr.elf",
+                        "app/sleep_test/build/zephyr/zephyr.elf"]
+        }
+    ]
+}

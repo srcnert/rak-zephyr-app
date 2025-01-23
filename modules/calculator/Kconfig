@@ -1,0 +1,6 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config CALCULATOR_MODULE
+	bool "Calculator Module Support"
+	help
+	  This option enables Calculator module

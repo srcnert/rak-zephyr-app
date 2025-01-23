@@ -1,0 +1,31 @@
+# SPDX-License-Identifier: Apache-2.0
+
+manifest:
+  self:
+    path: rak-zephyr-app
+    west-commands: scripts/west-commands.yml
+
+  remotes:
+    - name: zephyrproject-rtos
+      url-base: https://github.com/zephyrproject-rtos
+
+  projects:
+    - name: zephyr
+      remote: zephyrproject-rtos
+      revision: v4.0.0
+      import:
+        # By using name-allowlist we can clone only the modules that are
+        # strictly needed by the rak-zephyr-app applications.
+        name-allowlist:
+          - cmsis
+          - segger
+          - loramac-node
+          - hal_nordic
+          - hal_ambiq
+          - hal_st
+          - hal_stm32
+          - tinycrypt
+          - mcuboot
+          - mbedtls
+          - zcbor
+          - littlefs

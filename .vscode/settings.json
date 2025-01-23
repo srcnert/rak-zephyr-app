@@ -1,0 +1,23 @@
+{
+  /* Environment variables for c_cpp_properties.json  */
+  "ZEPHYR_WORKSPACE": "${workspaceFolder}/..",
+
+  /* Set TOOLCHAIN PATH according to your OS. */
+  "TOOLCHAIN_BASE": "/your/path/to/toolchains/0123456789",
+  "JLINK_PATH":     "/your/path/to/JLink_V123",
+  "MCUMGR_PATH":    "/your/path/to/go/bin",
+
+  /* Environment variables */
+  "ZEPHYR_BASE": "${config:ZEPHYR_WORKSPACE}/zephyr",
+  "ZEPHYR_TOOLCHAIN_VARIANT": "zephyr",
+  "ZEPHYR_SDK_INSTALL_DIR": "${config:TOOLCHAIN_BASE}/opt/zephyr-sdk",
+
+  /* Terminal paths */
+  "terminal.integrated.env.windows": {
+    "PATH": "${config:ZEPHYR_BASE};${config:ZEPHYR_TOOLCHAIN_VARIANT};${config:ZEPHYR_SDK_INSTALL_DIR};${config:TOOLCHAIN_BASE}/opt/bin;${config:JLINK_PATH};${config:MCUMGR_PATH};${env:PATH}"
+  },
+
+  "terminal.integrated.env.osx": {
+    "PATH": "${config:ZEPHYR_BASE}:${config:ZEPHYR_TOOLCHAIN_VARIANT}:${config:ZEPHYR_SDK_INSTALL_DIR}:${config:TOOLCHAIN_BASE}/bin:${config:JLINK_PATH}:${config:MCUMGR_PATH}:${env:PATH}"
+  }
+}
