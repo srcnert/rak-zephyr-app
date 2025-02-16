@@ -14,7 +14,7 @@
 
   /* Terminal paths */
   "terminal.integrated.env.windows": {
-    "PATH": "${config:ZEPHYR_BASE};${config:ZEPHYR_TOOLCHAIN_VARIANT};${config:ZEPHYR_SDK_INSTALL_DIR};${config:TOOLCHAIN_BASE}/opt/bin;${config:JLINK_PATH};${config:MCUMGR_PATH};${env:PATH}"
+    "PATH": "${config:ZEPHYR_BASE};${config:ZEPHYR_TOOLCHAIN_VARIANT};${config:ZEPHYR_SDK_INSTALL_DIR};${config:TOOLCHAIN_BASE}/opt/bin;${config:TOOLCHAIN_BASE}/opt/bin/Scripts;${config:JLINK_PATH};${config:MCUMGR_PATH};${env:PATH}"
   },
 
   "terminal.integrated.env.osx": {
