@@ -32,11 +32,3 @@
 // 		bias-pull-up;
 // 	};
 // };
-
-&subghzspi {
-	lora: radio@0 {
-		// Select this value according to your board!!!
-		// power-amplifier-output = "rfo-lp";
-		power-amplifier-output = "rfo-hp";
-	};
-};

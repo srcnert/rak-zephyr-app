@@ -138,6 +138,8 @@ void lorawan_thread_handler(void)
 		}
 	} while (ret != 0);
 
+	lorawan_enable_adr(true);
+
 	LOG_INF("Joined network");
 
 	while (1) {
