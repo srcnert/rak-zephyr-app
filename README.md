@@ -43,6 +43,8 @@ west patch
 To build an application, open '../rak-zephyr-workspace/rak-zephyr-app' directory on your Visual Studio Code app. After that, please open '../.vscode/settings.json' file and set following parameters:
 
 ```shell
+"ZEPHYR_WORKSPACE": "/your/path/to/rak-zephyr-workspace",
+
 "TOOLCHAIN_BASE":   "/your/path/to/toolchains/0123456789",
 "JLINK_PATH":       "/your/path/to/JLink_V123",
 "MCUMGR_PATH":      "/your/path/to/go/bin"

@@ -68,6 +68,13 @@
             "command": "west",
             "args": ["patch"],
             "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "echo",
+            "type": "shell",
+            "command": "echo",
+            "args": ["$PATH"],
+            "problemMatcher": ["$gcc"]
         }
     ],
     "inputs": [
