@@ -1,8 +1,3 @@
-/*
- * Copyright (c) 2024 Kenneth Lu <kuohsianglu@gmail.com>
- * SPDX-License-Identifier: Apache-2.0
- */
-
 /dts-v1/;
 #include <st/wl/stm32wle5Xc.dtsi>
 #include <st/wl/stm32wle5ccux-pinctrl.dtsi>
@@ -46,16 +41,30 @@
 	status = "okay";
 };
 
-&clk_lsi {
+&clk_hse {
 	status = "okay";
+	clock-frequency = <DT_FREQ_M(32)>;
+};
+
+&clk_lse {
+	status = "okay";
+	clock-frequency = <32768>;
+};
+
+&clk_hsi {
+	status = "disabled";
+};
+
+&clk_lsi {
+	status = "disabled";
 };
 
 &pll {
 	div-m = <1>;
-	mul-n = <6>;
+	mul-n = <3>;
 	div-r = <2>;
 	div-q = <2>;
-	clocks = <&clk_hsi>;
+	clocks = <&clk_hse>;
 	status = "okay";
 };
 
@@ -111,14 +120,6 @@
 };
 
 &rng {
-	status = "okay";
-};
-
-&clk_lse {
-	clock-frequency = <32768>;
-};
-
-&clk_hsi {
 	status = "okay";
 };
 
