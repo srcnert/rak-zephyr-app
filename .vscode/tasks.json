@@ -119,6 +119,7 @@
                         "app/blinky",
                         "app/dfu",
                         "app/hello_world",
+                        "app/lora_shell",
                         "app/lorawan_otaa",
                         "app/shtc3",
                         "app/sleep_test"]

@@ -1,0 +1,32 @@
+/ {
+	chosen {
+		zephyr,console = &cdc_acm_uart0;
+	};
+
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		blue_led: led_2 {
+			gpios = <&gpio1 4 GPIO_ACTIVE_HIGH>;
+			label = "Blue LED";
+		};
+		green_led: led_1 {
+			gpios = <&gpio1 3 GPIO_ACTIVE_HIGH>;
+			label = "Green LED";
+		};
+	};
+};
+
+&reg1 {
+	regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
