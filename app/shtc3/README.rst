@@ -12,7 +12,7 @@ References
 Building and Running
 ********************
 
-This project outputs SHTC3 sensor (RAK1901) data to the console. 
+This project outputs SHTC3 sensor (RAK1901) data to the console.
 It requires a RAK1901 sensor to connected to RAK19007 base board.
 
 Building for rak3172

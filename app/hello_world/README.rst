@@ -3,7 +3,7 @@ Overview
 
 A simple sample that can be used with RAKwireless LoRa modules and
 prints "Hello World" to the console. The example provides a way to use
-RAK19007 base board's USB-C port. For this aim, rak3172 is using LP-UART, 
+RAK19007 base board's USB-C port. For this aim, rak3172 is using LP-UART,
 rak4631 is using USB and RAK11720 is using UART. Please check overlay files
 to get detailed information.
 

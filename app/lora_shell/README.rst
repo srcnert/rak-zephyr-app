@@ -54,5 +54,5 @@ Building for rak11720
    :goals: build flash
    :west-args: --no-sysbuild
 
-After flashing, the GREEN LED starts with on and off and then, the cli commands 
+After flashing, the GREEN LED starts with on and off and then, the cli commands
 can be used.

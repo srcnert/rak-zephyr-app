@@ -22,7 +22,7 @@ LOG_MODULE_REGISTER(ble_peripheral, LOG_LEVEL_INF);
 #define BT_LE_ADV_CUSTOM BT_LE_ADV_PARAM(BT_LE_ADV_OPT_CONN, \
 									BT_GAP_ADV_FAST_INT_MIN, \
 									BT_GAP_ADV_FAST_INT_MAX, \
-									NULL)		
+									NULL)
 
 /* Advertising data */
 static const struct bt_data ad[] = {
@@ -32,7 +32,7 @@ static const struct bt_data ad[] = {
 				0x10, /* Eddystone-URL frame type */
 				0x00, /* Calibrated Tx power at 0m */
 				0x01, /* URL Scheme Prefix https://www. */
-				'r', 'a', 'k', 
+				'r', 'a', 'k',
 				'w', 'i', 'r', 'e', 'l', 'e', 's', 's',
 				0x07 /* .com */
 			)
@@ -90,7 +90,7 @@ static void bt_ready_handler(int err) {
 		LOG_ERR("Ble peripheral init failed (err %d)", err);
 		return;
 	}
-	
+
 	bt_gatt_cb_register(&gatt_callbacks);
 	k_work_submit(&adv_start_work);
 }

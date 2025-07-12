@@ -1,7 +1,7 @@
 Overview
 ********
 
-This sample application implements DFU process with 
+This sample application implements DFU process with
 the MCUmgr management protocol.
 For more information about MCUmgr and SMP, please see :ref:`device_mgmt`.
 
@@ -41,7 +41,7 @@ it can be built and flashed like normal using ``--sysbuild`` arguments.
 Building the application
 ************************
 
-The below steps describe how to build and run the dfu sample in Zephyr. 
+The below steps describe how to build and run the dfu sample in Zephyr.
 
 Building for rak3172
 --------------------

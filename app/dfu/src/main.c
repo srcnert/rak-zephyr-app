@@ -30,7 +30,7 @@ static void configure_uicr(void) {
 }
 #endif
 
-int main(void) 
+int main(void)
 {
 #if defined(CONFIG_BOARD_RAK4631)
 	configure_uicr();
@@ -51,6 +51,6 @@ int main(void)
 	while (1) {
 		k_sleep(K_FOREVER);
 	}
-	
+
 	return 0;
 }

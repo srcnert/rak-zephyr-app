@@ -3,7 +3,7 @@ Overview
 
 This sample demonstrates how to use the :ref:`ADC driver API <adc_api>`.
 
-The project reads ADC samples from one channel and prints 
+The project reads ADC samples from one channel and prints
 the readings on the RTT console.
 
 The pins of the ADC channels are board-specific. Please check the boards

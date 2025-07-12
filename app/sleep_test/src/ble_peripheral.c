@@ -24,7 +24,7 @@ static const struct bt_data ad[] = {
 				0x10, /* Eddystone-URL frame type */
 				0x00, /* Calibrated Tx power at 0m */
 				0x01, /* URL Scheme Prefix https://www. */
-				'r', 'a', 'k', 
+				'r', 'a', 'k',
 				'w', 'i', 'r', 'e', 'l', 'e', 's', 's',
 				0x07 /* .com */
 			)
@@ -37,7 +37,7 @@ static const struct bt_data sd[] = {
 
 static void adv_stop_work_handler(struct k_work *work) {
 	LOG_INF("Advertising stopped");
-	bt_le_adv_stop();	
+	bt_le_adv_stop();
 }
 K_WORK_DELAYABLE_DEFINE(adv_stop_work, adv_stop_work_handler);
 
