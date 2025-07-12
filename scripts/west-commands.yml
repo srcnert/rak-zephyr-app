@@ -4,8 +4,3 @@ west-commands:
       - name: hello_world
         class: HelloWorld
         help: Sample west custom command
-  - file: scripts/west_commands/patch.py
-    commands:
-      - name: patch
-        class: Patch
-        help: patch west subprojects

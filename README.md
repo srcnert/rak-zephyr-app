@@ -13,7 +13,7 @@ After that, you must install toolchain via:
 nrfutil install device
 nrfutil install toolchain-manager
 # Install a specific version toolchain:
-nrfutil toolchain-manager install --ncs-version v2.9.0
+nrfutil toolchain-manager install --ncs-version v3.0.2
 # List your currently installed toolchain and learn its path:
 nrfutil toolchain-manager list
 # Launch toolchain commands in the environment directly:
@@ -36,7 +36,17 @@ https://docs.zephyrproject.org/latest/develop/getting_started/index.html
 To patch addressed issues, run the following command:
 ```shell
 cd rak-zephyr-app
-west patch
+west -v patch apply
+```
+
+To revert applied patches:
+```shell
+west -v patch clean
+```
+
+To list patch files:
+```shell
+west patch list
 ```
 
 ### Building and running
@@ -52,14 +62,13 @@ To build an application, open '../rak-zephyr-workspace/rak-zephyr-app' directory
 
 *** McuMgr is necessary to use mcumgr commands. Please check dfu application for details.
 
-Please run 'west patch' command to fix following problems:
+Please run 'west patch apply' command to fix following problems:
 - Rak3172 i2c is not working correctly with PM. https://github.com/zephyrproject-rtos/zephyr/issues/37414
-- Adding mcuboot support for Rak11720. https://github.com/zephyrproject-rtos/zephyr/pull/80987
-- Adding Rak3172 board support. https://github.com/zephyrproject-rtos/zephyr/pull/74940
 - Adding RTT support for Rak11720.
 - Fixing Apollo3's adc problem.
 - Fixing build problem if PM and GPIO is used together for apollo3.
 - Sx1262 idle current problem.
+- Fixing wrongly defined clock settings and RF controller pins. https://github.com/zephyrproject-rtos/zephyr/pull/86037
 
 You can build your project via 'VsCode --> Terminal --> Run Build Task' option.
 For example, if you wanna build 'app/adc' example for rak3172, please select following options:

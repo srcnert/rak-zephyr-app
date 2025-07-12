@@ -80,11 +80,11 @@ int rak_lorawan_init() {
 	return ret;
 }
 
-static void lorawan_dl_callback(uint8_t port, bool data_pending,
-			int16_t rssi, int8_t snr,
-			uint8_t len, const uint8_t *hex_data)
+static void lorawan_dl_callback(uint8_t port, uint8_t flags, int16_t rssi, int8_t snr, uint8_t len,
+			const uint8_t *hex_data)
 {
-	LOG_INF("Port %d, Pending %d, RSSI %ddB, SNR %ddBm", port, data_pending, rssi, snr);
+	LOG_INF("Port %d, Pending %d, RSSI %ddB, SNR %ddBm, Time %d", port,
+		flags & LORAWAN_DATA_PENDING, rssi, snr, !!(flags & LORAWAN_TIME_UPDATED));
 	if (hex_data) {
 		LOG_HEXDUMP_INF(hex_data, len, "Payload: ");
 	}
@@ -123,6 +123,7 @@ void lorawan_thread_handler(void)
 	join_cfg.otaa.join_eui = join_eui;
 	join_cfg.otaa.app_key = app_key;
 	join_cfg.otaa.nwk_key = app_key;
+	join_cfg.otaa.dev_nonce = 0u;
 
 	LOG_INF("Joining network over OTAA");
 
