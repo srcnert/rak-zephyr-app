@@ -1,7 +1,9 @@
 RAKwireless Zephyr Applications
 ===
 
-This project is prepared to use RAKwireless LoRa modules with Zephyr project. This repo is prepared to use RAK3172, RAK4631 and RAK11720 stamp modules. All sample projects are tested on RAK19007 Wisblock base board. The main idea of the repo is inspired by https://github.com/zephyrproject-rtos/example-application.
+This project is prepared to use RAKwireless LoRa modules with Zephyr project. This repo is prepared to use RAK3172, RAK4631 and RAK11720 stamp modules. All sample projects are tested on RAK19007 Wisblock base board.
+
+The main idea of the repo is inspired by https://github.com/zephyrproject-rtos/example-application.
 
 ### Initialization
 Before starting initialization, please install VsCODE, GIT, J-LINK and NRFUTIL programs for your operating system.

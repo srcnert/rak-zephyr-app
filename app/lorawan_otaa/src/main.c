@@ -12,9 +12,10 @@
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/settings/settings.h>
 
-#include "ble_peripheral.h"
-#include "rak_lorawan.h"
 #include "rak_adc.h"
+#include "rak_ble_peripheral.h"
+#include "rak_lorawan.h"
+#include "rak_lp_console.h"
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
@@ -50,9 +51,13 @@ static void configure_uicr(void) {
 }
 #endif
 
-int main(void) 
+int main(void)
 {
 	int ret = -1;
+
+#if defined(CONFIG_BOARD_RAK3172)
+	rak_lp_console_init();
+#endif
 
 #if defined(CONFIG_BOARD_RAK4631)
 	configure_uicr();
@@ -64,7 +69,7 @@ int main(void)
 	}
 
 #if defined(CONFIG_BT_PERIPHERAL)
-	ret = ble_peripheral_init();
+	ret = rak_ble_peripheral_init();
 	if (ret) {
 		LOG_ERR("Failed to init ble peripheral: %d", ret);
 	}
@@ -83,7 +88,7 @@ int main(void)
 		LOG_ERR("Failed to init adc: %d", ret);
 		return 0;
 	}
-	
+
 	ret = rak_lorawan_init();
 	if(ret != 0) {
 		LOG_ERR("Failed to start lorawan: %d", ret);
@@ -91,7 +96,7 @@ int main(void)
 	}
 
 	gpio_pin_set_dt(&led, 0); // OFF
-	
+
 	rak_lorawan_thread_start();
 
 	LOG_INF("LoRaWAN OTAA example started @%s", CONFIG_BOARD);

@@ -13,10 +13,14 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(rak_lorawan, LOG_LEVEL_DBG);
 
+#define TEST_BLINK 0
+
+#if TEST_BLINK
 /*
  * Get blue led dt
  */
-// static const struct gpio_dt_spec test_led = GPIO_DT_SPEC_GET(DT_ALIAS(blue_led), gpios);
+static const struct gpio_dt_spec test_led = GPIO_DT_SPEC_GET(DT_ALIAS(blue_led), gpios);
+#endif
 
 /*
  * Get temp sensor devices
@@ -55,12 +59,14 @@ static const struct json_obj_descr json_descr[] = {
 int rak_lorawan_init() {
 	int ret = 0;
 
-	// if (!gpio_is_ready_dt(&test_led)) {
-	// 	LOG_ERR("LED is not ready!");
-	// 	return -1;
-	// }
+#if TEST_BLINK
+	if (!gpio_is_ready_dt(&test_led)) {
+		LOG_ERR("LED is not ready!");
+		return -1;
+	}
 
-	// gpio_pin_configure_dt(&test_led, GPIO_OUTPUT_ACTIVE);
+	gpio_pin_configure_dt(&test_led, GPIO_OUTPUT_ACTIVE);
+#endif
 
 	if (!device_is_ready(temp_dev)) {
 		LOG_ERR("%s: device not ready.", temp_dev->name);
@@ -197,7 +203,10 @@ void lorawan_thread_handler(void)
 			LOG_INF("Data sent!");
 		}
 
-		// gpio_pin_toggle_dt(&test_led);
+#if TEST_BLINK
+		gpio_pin_toggle_dt(&test_led);
+#endif
+
 		k_sleep(K_MSEC(SLEEP_TIME_MS));
 	}
 }
