@@ -1,0 +1,70 @@
+From 1e613e4d233fafd175cccd54683cece9331284b2 Mon Sep 17 00:00:00 2001
+From: Sercan Erat <sercanerat@gmail.com>
+Date: Sat, 23 Aug 2025 16:09:18 +0300
+Subject: [PATCH] Fixing STM32 I2C problem
+
+---
+ drivers/i2c/i2c_ll_stm32_common.c | 40 +++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/drivers/i2c/i2c_ll_stm32_common.c b/drivers/i2c/i2c_ll_stm32_common.c
+index e94ae5ec252..4c0303c00dd 100644
+--- a/drivers/i2c/i2c_ll_stm32_common.c
++++ b/drivers/i2c/i2c_ll_stm32_common.c
+@@ -17,6 +17,43 @@ LOG_MODULE_REGISTER(i2c_ll_stm32_common);
+ 
+ #include "i2c_ll_stm32.h"
+ 
++#if defined(CONFIG_SOC_SERIES_STM32WLX)
++// https://github.com/hardwario/sticker-zephyr/commit/ccf70f350abbfa91bb9bbbc69efbad2868ab182e#diff-f46c0e00cabed812e7aa6f6672d36df7a914ee1f398224bf614ec3af6ad1c8ac
++static int i2c_stm32_reinit_timing(const struct device *dev)
++{
++	int ret;
++	const struct i2c_stm32_config *cfg = dev->config;
++	const struct device *const clk = DEVICE_DT_GET(STM32_CLOCK_CONTROL_NODE);
++	uint32_t i2c_clock = 0U;
++
++	if (IS_ENABLED(STM32_I2C_DOMAIN_CLOCK_SUPPORT) && (cfg->pclk_len > 1)) {
++		if (clock_control_get_rate(clk, (clock_control_subsys_t)&cfg->pclken[1],
++					&i2c_clock) < 0) {
++			LOG_ERR("Failed call clock_control_get_rate(pclken[1])");
++			return -EIO;
++		}
++	} else {
++		if (clock_control_get_rate(clk, (clock_control_subsys_t)&cfg->pclken[0],
++					&i2c_clock) < 0) {
++			LOG_ERR("Failed call clock_control_get_rate(pclken[0])");
++			return -EIO;
++		}
++	}
++
++#ifdef CONFIG_PM_DEVICE_RUNTIME
++	ret = clock_control_on(clk, (clock_control_subsys_t)&cfg->pclken[0]);
++	if (ret < 0) {
++		LOG_ERR("failure Enabling I2C clock");
++		return ret;
++	}
++#endif
++
++	ret = i2c_stm32_configure_timing(dev, i2c_clock);
++
++	return ret;
++}
++#endif
++
+ #ifdef CONFIG_I2C_STM32_COMBINED_INTERRUPT
+ void i2c_stm32_combined_isr(void *arg)
+ {
+@@ -98,6 +135,9 @@ int i2c_stm32_pm_action(const struct device *dev, enum pm_device_action action)
+ 
+ 	switch (action) {
+ 	case PM_DEVICE_ACTION_RESUME:
++#if defined(CONFIG_SOC_SERIES_STM32WLX)
++		i2c_stm32_reinit_timing(dev);
++#endif
+ 		err = i2c_stm32_activate(dev);
+ 		break;
+ 	case PM_DEVICE_ACTION_SUSPEND:
+-- 
+2.39.5 (Apple Git-154)
+

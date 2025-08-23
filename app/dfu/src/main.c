@@ -37,7 +37,7 @@ int main(void)
 #endif
 
 #if defined(CONFIG_BT_PERIPHERAL)
-	int ret = ble_peripheral_init();
+	int ret = rak_ble_peripheral_init();
 	if (ret) {
 		LOG_ERR("Failed to init ble peripheral: %d", ret);
 	}

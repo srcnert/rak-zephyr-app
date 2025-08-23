@@ -2,7 +2,6 @@
 
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
-#include <zephyr/pm/device.h>
 #include <zephyr/drivers/sensor.h>
 #include <zephyr/lorawan/lorawan.h>
 #include <zephyr/data/json.h>

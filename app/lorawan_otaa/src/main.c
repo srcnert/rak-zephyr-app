@@ -8,7 +8,6 @@
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
 #include <zephyr/devicetree.h>
-#include <zephyr/pm/device.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/settings/settings.h>
 

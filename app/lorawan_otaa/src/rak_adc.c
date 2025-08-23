@@ -49,7 +49,7 @@ static struct adc_sequence sequence = {
 
 int rak_adc_init()
 {
-	int err;
+	int ret;
 
 	/* Configure adc channel. */
 	if (!adc_is_ready_dt(&adc_channel)) {
@@ -57,10 +57,10 @@ int rak_adc_init()
 		return -1;
 	}
 
-	err = adc_channel_setup_dt(&adc_channel);
-	if (err < 0) {
-		LOG_ERR("Failed to setup channel: %d", err);
-		return err;
+	ret = adc_channel_setup_dt(&adc_channel);
+	if (ret < 0) {
+		LOG_ERR("Failed to setup channel: %d", ret);
+		return ret;
 	}
 
 	int32_t vref_mv = (int32_t)adc_ref_internal(adc_channel.dev);
@@ -74,17 +74,18 @@ int rak_adc_init()
 
 	(void)adc_sequence_init_dt(&adc_channel, &sequence);
 
-	return err;
+	return ret;
 }
 
 int rak_adc_sample(double *value) {
-	int err = -1;
+	int ret = -1;
 	int32_t val;
 
-	err = adc_read_dt(&adc_channel, &sequence);
-	if (err < 0) {
-		LOG_ERR("Failed to read: %d", err);
-		return err;
+
+	ret = adc_read_dt(&adc_channel, &sequence);
+	if (ret < 0) {
+		LOG_ERR("Failed to read: %d", ret);
+		return ret;
 	}
 
 	val = (int32_t)buf;
@@ -106,5 +107,5 @@ int rak_adc_sample(double *value) {
 	*/
 
 	*value = correction_ratio * ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
-	return err;
+	return ret;
 }

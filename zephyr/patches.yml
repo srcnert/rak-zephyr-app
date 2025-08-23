@@ -1,4 +1,13 @@
 patches:
+  - path: zephyr/0001-Fixing-STM32-I2C-problem.patch
+    sha256sum: 7c467b05aa766ed1648de612588ec1179b3db1762bba463094675e8979bae619
+    module: zephyr
+    author: Sercan ERAT
+    email: sercanerat@gmail.com
+    date: 2025-08-23
+    upstreamable: false
+    comments: |
+      Fixing Rak3172 i2c not working correctly with PM problem.
   - path: zephyr/0002-Fixing-lora-sleep-problem.patch
     sha256sum: 175b7025345e825e04644b82efa427f924a83877f0807eb7258164ab14aeabbe
     module: zephyr
@@ -17,3 +26,12 @@ patches:
     upstreamable: false
     comments: |
       Adding RTT support for RAK11720.
+  - path: zephyr/0004-Fixing-apollo3-adc-problem.patch
+    sha256sum: f263a69ca438fb63c6f371ac2c733e4d4538eecd4b17f0064414d90d849bc847
+    module: zephyr
+    author: Sercan ERAT
+    email: sercanerat@gmail.com
+    date: 2025-08-23
+    upstreamable: false
+    comments: |
+      Fixing Apollo3 Blue ADC problem.
