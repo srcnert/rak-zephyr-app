@@ -1,13 +1,4 @@
 patches:
-  - path: zephyr/0001-Fixing-STM32-I2C-problem.patch
-    sha256sum: 8407df705e698a1ba320ae37604cf7ba02052169d677d9b7cfe8ed70ad5b736b
-    module: zephyr
-    author: Sercan ERAT
-    email: sercanerat@gmail.com
-    date: 2024-12-13
-    upstreamable: false
-    comments: |
-      Fixing Rak3172 i2c not working correctly with PM problem.
   - path: zephyr/0002-Fixing-lora-sleep-problem.patch
     sha256sum: 175b7025345e825e04644b82efa427f924a83877f0807eb7258164ab14aeabbe
     module: zephyr
@@ -26,32 +17,3 @@ patches:
     upstreamable: false
     comments: |
       Adding RTT support for RAK11720.
-  - path: zephyr/0004-Fixing-apollo3-adc-problem.patch
-    sha256sum: f139c1eaa48b792caa715269f84191368333d1c5f211b224a9d98c42b0de7bba
-    module: zephyr
-    author: Sercan ERAT
-    email: sercanerat@gmail.com
-    date: 2024-12-13
-    upstreamable: false
-    comments: |
-      Fixing Apollo3 Blue ADC problem.
-  - path: zephyr/0005-Fixing-apollo3-gpio-problem.patch
-    sha256sum: 2b5d1d6b09ef0e83d0802061f26b24ee725b4be087075149eddd5c7e84042860
-    module: zephyr
-    author: Sercan ERAT
-    email: sercanerat@gmail.com
-    date: 2024-12-13
-    upstreamable: false
-    comments: |
-      Fixing Apollo3 Blue GPIO problem.
-  - path: zephyr/0006-Fixing-clock-and-RF-controller-pins.patch
-    sha256sum: 1309204b0a47151f872c118b017456ea3294e263a662d0d3a1c9daa4d2a87f13
-    module: zephyr
-    author: Sercan ERAT
-    email: sercanerat@gmail.com
-    date: 2025-06-28
-    merge-pr: https://github.com/zephyrproject-rtos/zephyr/pull/86037
-    merge-status: true
-    merge-commit: 168395f1953ca5c4c43655de11dacf4f8ccd3cec
-    comments: |
-      Fixing wrongly defined clock settings and RF controller pins
