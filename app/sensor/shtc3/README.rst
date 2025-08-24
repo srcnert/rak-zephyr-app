@@ -8,6 +8,7 @@ References
 **********
 
  - `RAK1901 sensor <https://store.rakwireless.com/products/rak1901-shtc3-temperature-humidity-sensor?srsltid=AfmBOor7X4-RTG4Dm4S73nG4nOUBOrKoDRkf_7FxUK6xMWYAksMGRyh1/>`_
+ - `RAK5010 board internal sensor <https://docs.rakwireless.com/product-categories/wistrio/rak5010-m/datasheet/#system-on-a-chip-socs-and-sensors>`
 
 Building and Running
 ********************
@@ -21,7 +22,7 @@ Building for rak3172
 :zephyr:board:`rak3172` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/shtc3
+   :zephyr-app: app/sensor/shtc3
    :board: rak3172
    :goals: build flash
    :west-args: --no-sysbuild
@@ -32,8 +33,8 @@ Building for rak4631
 :zephyr:board:`rak4631` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/shtc3
-   :board: rak4631
+   :zephyr-app: app/sensor/shtc3
+   :board: rak4631, rak5010
    :goals: build flash
    :west-args: --no-sysbuild
 
@@ -43,7 +44,7 @@ Building for rak11720
 :zephyr:board:`rak11720` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/shtc3
+   :zephyr-app: app/sensor/shtc3
    :board: rak11720
    :goals: build flash
    :west-args: --no-sysbuild

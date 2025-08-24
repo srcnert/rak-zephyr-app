@@ -123,6 +123,7 @@
                         "app/lora/lora_shell",
                         "app/lora/lorawan_otaa",
                         "app/lora/sleep_test",
+                        "app/modem/sleep_test",
                         "app/sensor/shtc3",
                     ]
         }

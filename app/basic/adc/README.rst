@@ -26,8 +26,8 @@ Building and Running
 Configuration of channels (settings like gain, reference, or acquisition time)
 also needs to be specified in devicetree, in ADC controller child nodes. Also
 the ADC resolution and oversampling setting (if used) need to be specified
-there. See :zephyr_file:`boards/3172.overlay`, :zephyr_file:`boards/rak4631.overlay`
-:zephyr_file:`boards/11720.overlay` for an example of such setup.
+there. See :zephyr_file:`boards/3172.overlay`, :zephyr_file:`boards/rak4631.overlay`,
+:zephyr_file:`boards/rak5010.overlay` or :zephyr_file:`boards/11720.overlay` for an example of such setup.
 
 The sample can be built and executed as follows:
 
@@ -37,7 +37,7 @@ Building for rak3172
 :zephyr:board:`rak3172` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/adc
+   :zephyr-app: app/basic/adc
    :board: rak3172
    :goals: build flash
    :west-args: --no-sysbuild
@@ -48,8 +48,19 @@ Building for rak4631
 :zephyr:board:`rak4631` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/adc
+   :zephyr-app: app/basic/adc
    :board: rak4631
+   :goals: build flash
+   :west-args: --no-sysbuild
+
+Building for rak5010
+--------------------
+
+:zephyr:board:`rak4631` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/basic/adc
+   :board: rak5010
    :goals: build flash
    :west-args: --no-sysbuild
 

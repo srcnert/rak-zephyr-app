@@ -62,7 +62,7 @@ Building for rak4631
 
 .. zephyr-app-commands::
    :zephyr-app: app/dfu
-   :board: rak4631
+   :board: rak4631 rak5010
    :goals: build flash
    :west-args: --sysbuild
    :gen-args: -DEXTRA_CONF_FILE="overlay_ble.conf;overlay_mcuboot.conf"

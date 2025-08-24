@@ -27,7 +27,7 @@ Building for rak3172
 :zephyr:board:`rak3172` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/lora_shell
+   :zephyr-app: app/lora/lora_shell
    :board: rak3172
    :goals: build flash
    :west-args: --no-sysbuild
@@ -38,7 +38,7 @@ Building for rak4631
 :zephyr:board:`rak4631` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/lora_shell
+   :zephyr-app: app/lora/lora_shell
    :board: rak4631
    :goals: build flash
    :west-args: --no-sysbuild
@@ -49,7 +49,7 @@ Building for rak11720
 :zephyr:board:`rak11720` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/lora_shell
+   :zephyr-app: app/lora/lora_shell
    :board: rak11720
    :goals: build flash
    :west-args: --no-sysbuild

@@ -4,8 +4,8 @@ Overview
 A simple sample that can be used with RAKwireless LoRa modules and
 prints "Hello World" to the console. The example provides a way to use
 RAK19007 base board's USB-C port. For this aim, rak3172 is using LP-UART,
-rak4631 is using USB and RAK11720 is using UART. Please check overlay files
-to get detailed information.
+rak4631 and rak5010 arre using USB and RAK11720 is using UART.
+Please check overlay files to get detailed information.
 
 Building and Running
 ********************
@@ -30,7 +30,7 @@ Building for rak4631
 
 .. zephyr-app-commands::
    :zephyr-app: app/hello_world
-   :board: rak4631
+   :board: rak4631, rak5010
    :goals: build flash
    :west-args: --no-sysbuild
 
