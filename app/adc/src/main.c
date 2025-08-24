@@ -12,19 +12,6 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
-#if defined(CONFIG_BOARD_RAK3172)
-double correction_ratio = 1.1;
-#endif
-
-#if defined(CONFIG_BOARD_RAK4631)
-double correction_ratio = 1.1;
-#endif
-
-#if defined(CONFIG_BOARD_RAK11720)
-// Apollo3's adc range is 2V!
-double correction_ratio = (2.13) * (1.3);
-#endif
-
 #if !DT_NODE_EXISTS(DT_PATH(zephyr_user)) || \
 	!DT_NODE_HAS_PROP(DT_PATH(zephyr_user), io_channels)
 #error "No suitable devicetree overlay specified"
@@ -32,18 +19,6 @@ double correction_ratio = (2.13) * (1.3);
 
 #define DT_SPEC_AND_COMMA(node_id, prop, idx) \
 	ADC_DT_SPEC_GET_BY_IDX(node_id, idx),
-
-/* Data of ADC io-channels specified in devicetree. */
-static const struct adc_dt_spec adc_channels[] = {
-	DT_FOREACH_PROP_ELEM(DT_PATH(zephyr_user), io_channels, DT_SPEC_AND_COMMA)
-};
-
-uint16_t buf;
-struct adc_sequence sequence = {
-	.buffer = &buf,
-	/* buffer size in bytes, not number of samples */
-	.buffer_size = sizeof(buf),
-};
 
 #if defined(CONFIG_BOARD_RAK4631)
 static void configure_uicr(void) {
@@ -65,6 +40,18 @@ static void configure_uicr(void) {
 	}
 }
 #endif
+
+/* Data of ADC io-channels specified in devicetree. */
+static const struct adc_dt_spec adc_channels[] = {
+	DT_FOREACH_PROP_ELEM(DT_PATH(zephyr_user), io_channels, DT_SPEC_AND_COMMA)
+};
+
+uint16_t buf;
+struct adc_sequence sequence = {
+	.buffer = &buf,
+	/* buffer size in bytes, not number of samples */
+	.buffer_size = sizeof(buf),
+};
 
 int main(void)
 {
@@ -132,9 +119,29 @@ int main(void)
 
 			Please connect a lipo battery to your RAK19007 board!
 			*/
+			double bat_lvl = 0.0;
 
-			double bat_lvl = correction_ratio * ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
-			LOG_INF("V_BAT = %"PRId32" mV", (int32_t) (bat_lvl*1000.0));
+#if defined(CONFIG_BOARD_RAK3172)
+			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
+#endif
+
+#if defined(CONFIG_BOARD_RAK4631)
+			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
+#endif
+
+#if defined(CONFIG_BOARD_RAK5010)
+			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (2.0)) + 0.3;
+#endif
+
+#if defined(CONFIG_BOARD_RAK11720)
+			// Apollo3's adc range is 2V!
+			// RAK5005-O/RAK19007 Divider Resistor: 2.5 / 1.5
+			// RAK11722 Divider Resistor: 1.3 / 1.0
+			// Calibration: X * 2.02 + 0.21
+			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * 1.3 * (5.0)) / (3.0)) * 2.02 + 0.21;
+#endif
+
+			LOG_INF("%s, V_BAT = %"PRId32" mV", CONFIG_BOARD, (int32_t) (bat_lvl*1000.0));
 		}
 
 		k_sleep(K_MSEC(1000));

@@ -8,7 +8,7 @@
 #include <zephyr/bluetooth/conn.h>
 #include <zephyr/bluetooth/gatt.h>
 
-#include "ble_peripheral.h"
+#include "rak_ble_peripheral.h"
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(ble_peripheral, LOG_LEVEL_INF);
