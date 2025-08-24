@@ -116,14 +116,15 @@
             "id": "assign_project",
             "type": "pickString",
             "description": "Select the project:",
-            "options": ["app/adc",
-                        "app/blinky",
-                        "app/dfu",
-                        "app/hello_world",
-                        "app/lora_shell",
-                        "app/lorawan_otaa",
-                        "app/shtc3",
-                        "app/sleep_test"]
+            "options": ["app/hello_world",
+                        "app/basic/adc",
+                        "app/basic/blinky",
+                        "app/basic/dfu",
+                        "app/lora/lora_shell",
+                        "app/lora/lorawan_otaa",
+                        "app/lora/sleep_test",
+                        "app/sensor/shtc3",
+                    ]
         }
       ]
 }

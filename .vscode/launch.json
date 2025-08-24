@@ -50,14 +50,15 @@
             "id": "assign_project",
             "type": "pickString",
             "description": "Select the project:",
-            "options": ["app/adc/build/zephyr/zephyr.elf",
-                        "app/blinky/build/zephyr/zephyr.elf",
-                        "app/dfu/build/zephyr/zephyr.elf",
-                        "app/hello_world/build/zephyr/zephyr.elf",
-                        "app/lora_shell/build/zephyr/zephyr.elf",
-                        "app/lorawan_otaa/build/zephyr/zephyr.elf",
-                        "app/shtc3/build/zephyr/zephyr.elf",
-                        "app/sleep_test/build/zephyr/zephyr.elf"]
+            "options": ["app/hello_world/build/zephyr/zephyr.elf"
+                        "app/basic/adc/build/zephyr/zephyr.elf",
+                        "app/basic/blinky/build/zephyr/zephyr.elf",
+                        "app/basic/dfu/build/zephyr/zephyr.elf",
+                        "app/lora/lora_shell/build/zephyr/zephyr.elf",
+                        "app/lora/lorawan_otaa/build/zephyr/zephyr.elf",
+                        "app/lora/sleep_test/build/zephyr/zephyr.elf"
+                        "app/sensor/shtc3/build/zephyr/zephyr.elf",
+                    ]
         }
     ]
 }
