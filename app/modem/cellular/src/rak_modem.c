@@ -1,0 +1,146 @@
+#include <zephyr/kernel.h>
+#include <zephyr/device.h>
+
+#include <zephyr/net/socket.h>
+#include <zephyr/net/net_if.h>
+#include <zephyr/net/dns_resolve.h>
+#include <zephyr/pm/device.h>
+#include <zephyr/pm/device_runtime.h>
+#include <zephyr/drivers/cellular.h>
+#include <zephyr/drivers/regulator.h>
+
+#include "rak_modem.h"
+
+#include <zephyr/logging/log.h>
+LOG_MODULE_REGISTER(modem, LOG_LEVEL_INF);
+
+// Modem Devices
+static const struct device *mdm = DEVICE_DT_GET(DT_ALIAS(modem));
+static const struct device *mdm_uart = DEVICE_DT_GET(DT_ALIAS(modem_uart));
+static const struct device *gps = DEVICE_DT_GET(DT_NODELABEL(gps_pwr));
+
+struct net_if *iface = NULL;
+
+int rak_modem_init()
+{
+	iface = net_if_get_first_by_type(&NET_L2_GET_NAME(PPP));
+	if (iface == NULL) {
+		LOG_ERR("Failed to init iface.");
+		return -EIO;
+	}
+
+	return 0;
+}
+
+int rak_modem_connect(int timeout_sec)
+{
+	int ret = net_mgmt_event_wait_on_iface(iface, NET_EVENT_L4_CONNECTED,
+                                        NULL, NULL, NULL, K_SECONDS(timeout_sec));
+	if (ret != 0) {
+		LOG_ERR("L4 was not connected in time: %d", ret);
+		return ret;
+	}
+
+	ret = net_mgmt_event_wait_on_iface(iface, NET_EVENT_DNS_SERVER_ADD, NULL, NULL, NULL,
+					   K_SECONDS(30));
+	if (ret) {
+		LOG_ERR("DNS server was not added in time: %d", ret);
+		return ret;
+	}
+
+	return ret;
+}
+
+int rak_modem_disable_gps_power()
+{
+	int ret = regulator_disable(gps);
+	if (ret) {
+		LOG_ERR("Failed to suspend gps: %d", ret);
+	}
+
+	return ret;
+}
+
+void rak_modem_resume()
+{
+	(void)pm_device_action_run(mdm_uart, PM_DEVICE_ACTION_RESUME);
+	(void)pm_device_action_run(mdm, PM_DEVICE_ACTION_RESUME);
+}
+
+void rak_modem_suspend()
+{
+	(void)pm_device_action_run(mdm, PM_DEVICE_ACTION_SUSPEND);
+	(void)pm_device_action_run(mdm_uart, PM_DEVICE_ACTION_SUSPEND);
+
+}
+
+int rak_modem_if_up()
+{
+	return net_if_up(iface);
+}
+
+int rak_modem_if_down()
+{
+	return net_if_down(iface);
+}
+
+int rak_modem_get_cellular_info(rak_modem_info *modem_info)
+{
+	int ret;
+
+	ret = cellular_get_signal(mdm, CELLULAR_SIGNAL_RSSI, &modem_info->rssi);
+	if (ret) {
+		LOG_ERR("Failed to get signal: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_IMEI, modem_info->imei, sizeof(modem_info->imei));
+	if (ret) {
+		LOG_ERR("Failed to get modem imei: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MODEL_ID, modem_info->model_id, sizeof(modem_info->model_id));
+	if (ret) {
+		LOG_ERR("Failed to get model id: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MANUFACTURER, modem_info->manufacturer, sizeof(modem_info->manufacturer));
+	if (ret) {
+		LOG_ERR("Failed to get manufacturer: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_IMSI, modem_info->imsi, sizeof(modem_info->imsi));
+	if (ret) {
+		LOG_ERR("Failed to get imsi: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_ICCID, modem_info->iccid, sizeof(modem_info->iccid));
+	if (ret) {
+		LOG_ERR("Failed to get iccid: %d", ret);
+		return ret;
+	}
+
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_FW_VERSION, modem_info->fw_version, sizeof(modem_info->fw_version));
+	if (ret) {
+		LOG_ERR("Failed to get fw version: %d", ret);
+		return ret;
+	}
+
+	return ret;
+}
+
+void rak_modem_print_info(rak_modem_info info) {
+	LOG_INF("================================");
+	LOG_INF("IMEI: %s", info.imei);
+	LOG_INF("MODEL_ID: %s", info.model_id);
+	LOG_INF("MANUFACTURER: %s", info.manufacturer);
+	LOG_INF("FW_VERSION: %s", info.fw_version);
+	LOG_INF("SIM_IMSI: %s", info.imsi);
+	LOG_INF("SIM_ICCID: %s", info.iccid);
+	LOG_INF("RSSI: %d", info.rssi);
+	LOG_INF("================================");
+}

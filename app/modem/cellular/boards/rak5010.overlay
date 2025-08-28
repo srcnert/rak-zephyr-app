@@ -1,0 +1,76 @@
+/ {
+	chosen {
+		zephyr,console = &cdc_acm_uart0;
+	};
+
+	leds {
+		compatible = "gpio-leds";
+		green_led: led_1 {
+			gpios = <&gpio0 12 GPIO_ACTIVE_HIGH>;
+			label = "Green LED";
+		};
+	};
+
+	gps_pwr: gps_pwr {
+		compatible = "regulator-fixed";
+		regulator-name = "gps_pwr";
+		enable-gpios = <&gpio1 7 GPIO_ACTIVE_HIGH>;
+		regulator-boot-on;
+	};
+
+	aliases {
+		green-led = &green_led;
+		temp-sensor = &shtc3;
+		light-sensor = &opt3001;
+		accel-sensor = &lis3dh;
+		press-sensor = &lps22hb;
+		modem-uart = &uart0;
+		modem = &modem;
+	};
+};
+
+&uart0 {
+	status = "okay";
+	modem: modem {
+		status = "okay";
+		compatible = "quectel,bg95";
+		mdm-power-gpios = <&gpio0 2 GPIO_ACTIVE_HIGH>;
+	};
+};
+
+&uart1 {
+	status = "disabled";
+};
+
+&i2c1 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_FAST>;
+
+	shtc3: shtc3@70 {
+		compatible = "sensirion,shtc3", "sensirion,shtcx";
+		reg = <0x70>;
+		measure-mode = "normal";
+	};
+
+	opt3001: opt3001@44 {
+		compatible = "ti,opt3001";
+		reg = <0x44>;
+	};
+
+	lis3dh: lis3dh@19 {
+		compatible = "st,lis3dh", "st,lis2dh";
+		reg = <0x19>;
+		irq-gpios = <&gpio0 16 0>;
+	};
+
+	lps22hb: lps22hb-press@5c {
+		compatible = "st,lps22hb-press";
+		reg = <0x5c>;
+	};
+};
+
+&zephyr_udc0 {
+	cdc_acm_uart0: cdc_acm_uart0 {
+		compatible = "zephyr,cdc-acm-uart";
+	};
+};
