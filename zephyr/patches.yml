@@ -35,3 +35,12 @@ patches:
     upstreamable: false
     comments: |
       Fixing Apollo3 Blue ADC problem.
+  - path: zephyr/0005-Fixing-Apollo3-UART-sleep-problem.patch
+    sha256sum: 534af0e43ac489264029634d7be0bfe662f3e1063035bb0dc5ea4de9e5b6f26a
+    module: zephyr
+    author: Sercan ERAT
+    email: sercanerat@gmail.com
+    date: 2025-08-23
+    upstreamable: false
+    comments: |
+      Fixing Apollo3 Blue UART sleep problem.

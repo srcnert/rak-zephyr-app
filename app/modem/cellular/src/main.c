@@ -40,14 +40,14 @@ int main(void) {
 	ret = rak_modem_connect(120);
 	if (ret) {
 		LOG_ERR("Failed to connect: %d", ret);
-	}
-
-	rak_modem_info modem_info;
-	ret = rak_modem_get_cellular_info(&modem_info);
-	if (ret) {
-		LOG_ERR("Failed to get cellular info: %d", ret);
 	} else {
-		rak_modem_print_info(modem_info);
+		rak_modem_info modem_info;
+		ret = rak_modem_get_cellular_info(&modem_info);
+		if (ret) {
+			LOG_ERR("Failed to get cellular info: %d", ret);
+		} else {
+			rak_modem_print_info(modem_info);
+		}
 	}
 
 	ret = rak_modem_if_down();
