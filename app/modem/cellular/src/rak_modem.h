@@ -1,6 +1,8 @@
 #ifndef RAK_MODEM_H__
 #define RAK_MODEM_H__
 
+#include <zephyr/drivers/cellular.h>
+
 #define MODEM_CELLULAR_DATA_LEN              (16)
 #define MODEM_CELLULAR_DATA_IMEI_LEN         (16)
 #define MODEM_CELLULAR_DATA_MODEL_ID_LEN     (65)
@@ -13,6 +15,7 @@
 #define MODEM_CELLULAR_DATA_DATE_TIME_LEN    (32)
 
 typedef struct {
+	enum cellular_registration_status reg_status;
 	int16_t rssi;
 	uint8_t imei[MODEM_CELLULAR_DATA_IMEI_LEN];
 	uint8_t model_id[MODEM_CELLULAR_DATA_MODEL_ID_LEN];
