@@ -7,7 +7,7 @@ patches:
     date: 2025-08-23
     upstreamable: false
     comments: |
-      Fixing Rak3172 i2c not working correctly with PM problem.
+      Fixing RAK3172 i2c not working correctly with PM problem.
   - path: zephyr/0002-Fixing-lora-sleep-problem.patch
     sha256sum: 175b7025345e825e04644b82efa427f924a83877f0807eb7258164ab14aeabbe
     module: zephyr
@@ -34,13 +34,23 @@ patches:
     date: 2025-08-23
     upstreamable: false
     comments: |
-      Fixing Apollo3 Blue ADC problem.
+      Fixing RAK11720 ADC problem.
   - path: zephyr/0005-Fixing-Apollo3-UART-sleep-problem.patch
     sha256sum: 534af0e43ac489264029634d7be0bfe662f3e1063035bb0dc5ea4de9e5b6f26a
     module: zephyr
     author: Sercan ERAT
     email: sercanerat@gmail.com
-    date: 2025-08-23
+    date: 2025-09-01
     upstreamable: false
     comments: |
-      Fixing Apollo3 Blue UART sleep problem.
+      Fixing RAK11720 UART sleep problem.
+  - path: zephyr/0006-Fixing-STM32-Usart-PM-problem.patch
+    merge-pr: https://github.com/zephyrproject-rtos/zephyr/pull/95292
+    sha256sum: 4ffafe4bfe83a0c294a27a94e2ba31407bce892349f20d18bc17a4b023d62aae
+    module: zephyr
+    author: Sercan ERAT
+    email: sercanerat@gmail.com
+    date: 2025-09-01
+    upstreamable: false
+    comments: |
+      Fixing RAK3172 Usart PM problem.

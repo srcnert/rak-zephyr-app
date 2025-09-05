@@ -1,17 +1,20 @@
 / {
-	chosen {
-		zephyr,console = &lpuart1;
-		zephyr,shell-uart = &lpuart1;
-	};
-
 	aliases {
-		test-uart = &lpuart1;
+		test-uart = &usart2;
 	};
 };
 
 &lpuart1 {
-	pinctrl-0 = <&lpuart1_tx_pa2 &lpuart1_rx_pa3>;
-	pinctrl-names = "default";
-	current-speed = <115200>;
+	status = "disabled";
+};
+
+&usart1 {
+	status = "disabled";
+};
+
+&usart2 {
 	status = "okay";
+	current-speed = <115200>;
+	pinctrl-0 = <&usart2_tx_pa2 &usart2_rx_pa3>;
+	pinctrl-names = "default";
 };

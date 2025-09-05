@@ -54,6 +54,7 @@
                         "app/basic/adc/build/zephyr/zephyr.elf",
                         "app/basic/blinky/build/zephyr/zephyr.elf",
                         "app/basic/dfu/build/zephyr/zephyr.elf",
+                        "app/basic/uart_sleep/build/zephyr/zephyr.elf",
                         "app/lora/lora_shell/build/zephyr/zephyr.elf",
                         "app/lora/lorawan_otaa/build/zephyr/zephyr.elf",
                         "app/lora/sleep_test/build/zephyr/zephyr.elf",
