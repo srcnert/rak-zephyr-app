@@ -21,6 +21,7 @@ manifest:
           - cmsis_6
           - segger
           - loramac-node
+          - hal_espressif
           - hal_nordic
           - hal_ambiq
           - hal_st

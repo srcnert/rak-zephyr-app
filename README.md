@@ -31,6 +31,37 @@ cd rak-zephyr-workspace
 west update
 ```
 
+If you are RAK3112 module user, following steps must be applied to use this board.
+
+Firstly please install the Zephyr Software Development Kit (SDK) that contains toolchains
+for each of Zephyr’s supported architectures, which including compiler, assembler,
+linker and other programs required to build Zephyr applications.
+
+Please firstly install 'wget' tool according to you operating system. After that, the user
+must apply following commands:
+
+```shell
+# Run command and continue at newly opened terminal.
+nrfutil toolchain-manager launch --terminal
+# Python environment is missing the tqdm package, which is required by Zephyr's
+# west tool to display progress bars during installations.
+pip install tqdm
+# Remove current zephyr-sdk from your toolchain. (Please use your own toolchain address!)
+rm -rf /your/path/to/toolchains/0123456789/opt/zephyr-sdk
+# Go to rak-zephyr-workspace folder.
+cd <go to destination rak-zephyr-workspace>
+# Install zephyr-sdk for each of Zephyr’s supported architectures.
+west sdk install -d /your/path/to/toolchains/0123456789/opt/zephyr-sdk -t arm-zephyr-eabi riscv64-zephyr-elf xtensa-espressif_esp32s3_zephyr-elf
+```
+
+Espressif HAL requires WiFi and Bluetooth binary blobs in order work. Run
+the command below to retrieve those files.
+
+```shell
+cd <go to destination rak-zephyr-workspace>
+west blobs fetch hal_espressif
+```
+
 This is the easier way to set up a toolchain for Zephyr RTOS or nRF Connect SDK for RAK4631(nRF52840 + SX1262) or any other boards.
 
 Second way is to follow up Zephyr RTOS guide:
@@ -38,17 +69,20 @@ https://docs.zephyrproject.org/latest/develop/getting_started/index.html
 
 ### Patch
 To patch addressed issues, run the following command:
+
 ```shell
 cd rak-zephyr-app
 west -v patch apply
 ```
 
 To revert applied patches:
+
 ```shell
 west -v patch clean
 ```
 
 To list patch files:
+
 ```shell
 west patch list
 ```
