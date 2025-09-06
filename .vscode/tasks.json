@@ -59,7 +59,7 @@
             "label": "flash",
             "type": "shell",
             "command": "west",
-            "args": ["flash", "--runner", "jlink"],
+            "args": ["flash"],
             "problemMatcher": ["$gcc"]
         },
         {
@@ -82,7 +82,7 @@
             "id": "board_select",
             "type": "pickString",
             "description": "Select the board:",
-            "options": ["rak3172", "rak4631", "rak5010", "rak11720"]
+            "options": ["rak3112/esp32s3/procpu","rak3172", "rak4631", "rak5010", "rak11720"]
         },
         {
             "id": "build_type",
