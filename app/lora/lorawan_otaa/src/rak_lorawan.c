@@ -161,11 +161,11 @@ void lorawan_thread_handler(void)
 		if (ret != 0) {
 			temp_val = 0.0;
 			hum_val = 0.0;
-			LOG_ERR("SHTC3(RAK1901): failed: %d", ret);
+			LOG_ERR("RAK1901(SHTC3): failed: %d", ret);
 		} else {
 			temp_val = sensor_value_to_double(&temp);
 			hum_val = sensor_value_to_double(&hum);
-			LOG_INF("SHTC3(RAK1901): %.2f Cel ; %0.2f %%RH", temp_val, hum_val);
+			LOG_INF("RAK1901(SHTC3): %.2f Cel ; %0.2f %%RH", temp_val, hum_val);
 		}
 
 		ret = rak_adc_sample(&batt_val);

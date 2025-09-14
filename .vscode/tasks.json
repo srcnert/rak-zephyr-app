@@ -126,7 +126,8 @@
                         "app/lora/sleep_test",
                         "app/modem/cellular",
                         "app/modem/sleep_test",
-                        "app/sensor/shtc3",
+                        "app/sensor/rak1901",
+                        "app/sensor/rak1904",
                     ]
         }
       ]

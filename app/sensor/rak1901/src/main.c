@@ -21,8 +21,6 @@ static void configure_uicr(void) {
 		NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Ren;
 		while (NRF_NVMC->READY == NVMC_READY_READY_Busy){}
 
-		LOG_INF("REGOUT0 is updated!");
-
 		// System reset is needed to update UICR registers.
 		NVIC_SystemReset();
 	}
@@ -56,11 +54,11 @@ int main(void)
 						&hum);
 		}
 		if (rc != 0) {
-			printf("SHTCX: failed: %d\n", rc);
+			printf("RAK1901(SHTC3): failed: %d\n", rc);
 			break;
 		}
 
-		printf("SHTC3(RAK1901): %.2f Cel ; %0.2f %%RH\n",
+		printf("RAK1901(SHTC3): %.2f Cel ; %0.2f %%RH\n",
 				sensor_value_to_double(&temp),
 				sensor_value_to_double(&hum));
 
