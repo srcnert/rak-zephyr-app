@@ -38,6 +38,7 @@ static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpi
 static void led_init() {
 	if (!gpio_is_ready_dt(&led)) {
 		LOG_ERR("LED is not ready!");
+		return;
 	}
 
 	int ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
@@ -67,14 +68,12 @@ static void led_init() {
 static const struct device *lora_dev = DEVICE_DT_GET(DT_ALIAS(lora0));
 
 int main(void) {
-	int ret = -1;
-
 #if defined(CONFIG_BOARD_RAK4631)
 	configure_uicr();
 #endif
 
 #if defined(CONFIG_BT_PERIPHERAL)
-	ret = rak_ble_peripheral_init();
+	int ret = rak_ble_peripheral_init();
 	if (ret) {
 		LOG_ERR("Failed to init ble peripheral: %d", ret);
 		return -1;

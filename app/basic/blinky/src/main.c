@@ -1,11 +1,19 @@
 #include <zephyr/kernel.h>
+#include <zephyr/pm/pm.h>
+#include <zephyr/pm/device.h>
 #include <zephyr/drivers/gpio.h>
+#include <esp_sleep.h>
 
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS 1000
+
+/* Add an extra delay when sleeping to make sure that light sleep
+ * is chosen.
+ */
+#define LIGHT_SLP_EXTRA_DELAY	(50UL)
 
 /*
  * A build error on this line means your board is unsupported.
@@ -56,11 +64,11 @@ int main(void)
 	if (ret) {
 		LOG_ERR("Failed to control LED!");
 	}
-	k_msleep(1000);
-	ret = gpio_pin_set_dt(&led, 0); // OFF
-	if (ret) {
-		LOG_ERR("Failed to control LED!");
-	}
+	// k_msleep(1000);
+	// ret = gpio_pin_set_dt(&led, 0); // OFF
+	// if (ret) {
+	// 	LOG_ERR("Failed to control LED!");
+	// }
 
 	LOG_INF("Blinky! %s", CONFIG_BOARD);
 
@@ -69,7 +77,12 @@ int main(void)
 		led_state = !led_state;
 		printf("LED state: %s\n", led_state ? "ON" : "OFF");
 
-		k_msleep(SLEEP_TIME_MS);
+		/* Sleep triggers the idle thread, which makes the pm subsystem select some
+		 * pre-defined power state. Light sleep is used here because there is enough
+		 * time to consider it, energy-wise, worthy.
+		 */
+		k_sleep(K_USEC(DT_PROP(DT_NODELABEL(light_sleep), min_residency_us) +
+					LIGHT_SLP_EXTRA_DELAY));
 	}
 
 	return 0;

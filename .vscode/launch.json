@@ -2,10 +2,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Cortex Debug",
-            "executable": "${input:assign_project}",
-            "request": "launch",
+            "name": "Cortex Debug ARM",
             "type": "cortex-debug",
+            "request": "launch",
+            "executable": "${input:assign_project}",
+            "armToolchainPath": "${config:ZEPHYR_SDK_INSTALL_DIR}/arm-zephyr-eabi/bin",
+            "toolchainPrefix": "arm-zephyr-eabi",
             "servertype": "jlink",
             "windows":{
                 "serverpath": "${config:JLINK_PATH}/JLinkGDBServerCL.exe",
@@ -13,13 +15,12 @@
             "osx":{
                 "serverpath": "${config:JLINK_PATH}/JLinkGDBServerCLExe",
             },
+            "interface": "swd",
+            "device": "${input:mcu_select}",
+            "showDevDebugOutput": "raw",
             "runToEntryPoint": "main",
             "serialNumber": "",
-            "device": "${input:mcu_select}",
             "svdFile": "",
-            "interface": "swd",
-            "armToolchainPath": "${config:ZEPHYR_SDK_INSTALL_DIR}/arm-zephyr-eabi/bin",
-            "toolchainPrefix": "arm-zephyr-eabi",
             "rtos": "Zephyr",
             "liveWatch": {
                 "enabled": true,
@@ -37,6 +38,43 @@
                     }
                 ]
             }
+        },
+        {
+            "name": "Cortex Debug XTENSA",
+            "type": "cortex-debug",
+            "request": "attach", // no flash write attempt
+            "executable": "${input:assign_project}",
+            "gdbPath": "${config:ZEPHYR_SDK_INSTALL_DIR}/xtensa-espressif_esp32s3_zephyr-elf/bin/xtensa-espressif_esp32s3_zephyr-elf-gdb",
+            "servertype": "openocd",
+            "windows":{
+                "serverpath": "${config:OPENOCD_PATH}/openocd.exe",
+            },
+            "osx":{
+                "serverpath": "${config:OPENOCD_PATH}/openocd",
+            },
+            "interface": "jtag",
+            "configFiles": [
+                "${workspaceFolder}/boards/rakwireless/rak3112/doc/support/openocd.cfg"
+            ],
+            "overrideAttachCommands": [
+                "set remote hardware-watchpoint-limit 2",
+                "mon reset halt",
+                "maintenance flush register-cache",
+                "thb main",
+                "c"
+            ],
+            "overrideRestartCommands": [
+                "mon reset halt",
+                "maintenance flush register-cache",
+            ],
+            "postDebugTask": "reset-rak3112",
+            "preResetCommands": ["mon reset"],
+            "postResetCommands": ["mon reset resume"],
+            "showDevDebugOutput": "both",
+            "runToEntryPoint": "main",
+            "serialNumber": "",
+            "svdFile": "",
+            "rtos": "auto"
         }
     ],
     "inputs": [

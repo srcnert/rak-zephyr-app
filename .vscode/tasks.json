@@ -75,6 +75,16 @@
             "command": "echo",
             "args": ["$PATH"],
             "problemMatcher": ["$gcc"]
+        },
+        {
+            "label": "reset-rak3112",
+            "type": "shell",
+            "command": "openocd",
+            "args": [
+                "-f",  "${workspaceFolder}/boards/rakwireless/rak3112/doc/support/openocd.cfg",
+                "-c", "init; reset; exit"
+            ],
+            "problemMatcher": []
         }
     ],
     "inputs": [

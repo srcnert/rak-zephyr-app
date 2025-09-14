@@ -32,10 +32,9 @@ int main(void)
 	configure_uicr();
 #endif
 
-	printk("Hello World! %s\n", CONFIG_BOARD);
-
 	while (1) {
-		k_sleep(K_FOREVER);
+		printk("Hello World! %s\n", CONFIG_BOARD);
+		k_sleep(K_MSEC(1000));
 	}
 
 	return 0;

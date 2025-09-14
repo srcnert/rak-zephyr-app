@@ -5,6 +5,8 @@
 
 #include "rak_ble_peripheral.h"
 
+#include <esp_sleep.h>
+
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
@@ -32,7 +34,7 @@ static void configure_uicr(void) {
 /*
  * Get LoRa device
  */
-static const struct device *lora_dev = DEVICE_DT_GET(DT_ALIAS(lora0));
+// static const struct device *lora_dev = DEVICE_DT_GET(DT_ALIAS(lora0));
 
 /*
  * Get UART device
@@ -57,10 +59,10 @@ int main(void)
 	configure_uicr();
 #endif
 
-	if (!device_is_ready(lora_dev)) {
-		LOG_ERR("LoRa device not found!");
-		return -1;
-	}
+	// if (!device_is_ready(lora_dev)) {
+	// 	LOG_ERR("LoRa device not found!");
+	// 	return -1;
+	// }
 
 	if (!device_is_ready(uart_dev)) {
 		LOG_ERR("UART device not found!");
@@ -76,11 +78,12 @@ int main(void)
 #endif
 
 	while (1) {
-		pm_device_action_run(uart_dev, PM_DEVICE_ACTION_RESUME);
+		// pm_device_action_run(uart_dev, PM_DEVICE_ACTION_RESUME);
 		print_uart("Hello! Uart Sleep Test.\r\n");
-		pm_device_action_run(uart_dev, PM_DEVICE_ACTION_SUSPEND);
+		// pm_device_action_run(uart_dev, PM_DEVICE_ACTION_SUSPEND);
 
-		k_msleep(10000);
+		k_sleep(K_USEC(DT_PROP(DT_NODELABEL(light_sleep), min_residency_us) + 50UL));
+		// k_msleep(10000);
 
 	}
 
