@@ -1,9 +1,9 @@
 Overview
 ********
 
-The blinky example blinks an LED forever using the :ref:`GPIO API <gpio_api>`.
+The UART sleep example shows how to use Zephyr PM api with RAK Wisduo modules.
 
-The source code shows how to use blue and green leds on RAK19007 base board.
+The source code shows how to send UART messages with low power requirments.
 
 Building and Running
 ********************
@@ -19,7 +19,7 @@ Building for rak3112
    :zephyr-app: app/blinky
    :board: rak3172
    :goals: build flash
-   :west-args: --no-sysbuild
+   :west-args: --sysbuild
 
 Building for rak3172
 --------------------
@@ -54,5 +54,5 @@ Building for rak11720
    :goals: build flash
    :west-args: --no-sysbuild
 
-After flashing, the LED starts to blink and messages with the current LED state
-are printed on the console.
+After flashing, UART messages will be sended over selected UART port at every
+10 seconds.

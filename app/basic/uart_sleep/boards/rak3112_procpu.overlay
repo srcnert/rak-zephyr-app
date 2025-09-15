@@ -3,3 +3,7 @@
 		test-uart = &uart0;
 	};
 };
+
+&usb_serial {
+	status = "disabled";
+};
