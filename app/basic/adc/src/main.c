@@ -20,27 +20,6 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 #define DT_SPEC_AND_COMMA(node_id, prop, idx) \
 	ADC_DT_SPEC_GET_BY_IDX(node_id, idx),
 
-#if defined(CONFIG_BOARD_RAK4631)
-static void configure_uicr(void) {
-	if ((NRF_UICR->REGOUT0 & UICR_REGOUT0_VOUT_Msk) !=
-		(UICR_REGOUT0_VOUT_3V3 << UICR_REGOUT0_VOUT_Pos)) {
-		NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Wen;
-		while (NRF_NVMC->READY == NVMC_READY_READY_Busy){}
-
-		NRF_UICR->REGOUT0 = (NRF_UICR->REGOUT0 & ~((uint32_t)UICR_REGOUT0_VOUT_Msk)) |
-							(UICR_REGOUT0_VOUT_3V3 << UICR_REGOUT0_VOUT_Pos);
-
-		NRF_NVMC->CONFIG = NVMC_CONFIG_WEN_Ren;
-		while (NRF_NVMC->READY == NVMC_READY_READY_Busy){}
-
-		LOG_INF("REGOUT0 is updated!");
-
-		// System reset is needed to update UICR registers.
-		NVIC_SystemReset();
-	}
-}
-#endif
-
 /* Data of ADC io-channels specified in devicetree. */
 static const struct adc_dt_spec adc_channels[] = {
 	DT_FOREACH_PROP_ELEM(DT_PATH(zephyr_user), io_channels, DT_SPEC_AND_COMMA)
@@ -55,11 +34,7 @@ struct adc_sequence sequence = {
 
 int main(void)
 {
-	int err;
-
-#if defined(CONFIG_BOARD_RAK4631)
-	configure_uicr();
-#endif
+	int ret;
 
 	/* Configure channels individually prior to sampling. */
 	for (size_t i = 0U; i < ARRAY_SIZE(adc_channels); i++) {
@@ -68,9 +43,9 @@ int main(void)
 			return 0;
 		}
 
-		err = adc_channel_setup_dt(&adc_channels[i]);
-		if (err < 0) {
-			LOG_ERR("Could not setup channel #%d (%d)", i, err);
+		ret = adc_channel_setup_dt(&adc_channels[i]);
+		if (ret < 0) {
+			LOG_ERR("Could not setup channel #%d (%d)", i, ret);
 			return 0;
 		}
 	}
@@ -96,9 +71,9 @@ int main(void)
 
 			(void)adc_sequence_init_dt(&adc_channels[i], &sequence);
 
-			err = adc_read_dt(&adc_channels[i], &sequence);
-			if (err < 0) {
-				LOG_ERR("Could not read (%d)", err);
+			ret = adc_read_dt(&adc_channels[i], &sequence);
+			if (ret < 0) {
+				LOG_ERR("Could not read (%d)", ret);
 				continue;
 			}
 

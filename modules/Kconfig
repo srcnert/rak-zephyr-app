@@ -2,6 +2,6 @@
 
 menu "RAK Modules"
 
-rsource "calculator/Kconfig"
+rsource "board/Kconfig"
 
 endmenu

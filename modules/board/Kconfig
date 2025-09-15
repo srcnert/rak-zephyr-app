@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: Apache-2.0
+
+config RAK_BOARD_4631_EARLY_INIT
+	bool "Set RAK4631 board UICR value to 3.3V"
+	default y
+	depends on BOARD_RAK4631
+	help
+	  This option set RAK4631 board UICR value to 3.3V.
