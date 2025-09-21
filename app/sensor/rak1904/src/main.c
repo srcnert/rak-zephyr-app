@@ -23,8 +23,7 @@ int main(void)
 
 		ret = sensor_sample_fetch(dev);
 		if (ret == 0) {
-			ret = sensor_channel_get(dev, SENSOR_CHAN_ACCEL_XYZ,
-						accel);
+			ret = sensor_channel_get(dev, SENSOR_CHAN_ACCEL_XYZ, accel);
 		}
 
 		if (ret != 0) {
@@ -33,9 +32,8 @@ int main(void)
 		}
 
 		printf("RAK1904(LIS3DH): %.2f m/s^2 ; %.2f m/s^2 ; %.2f m/s^2\n",
-				sensor_value_to_double(&accel[0]),
-				sensor_value_to_double(&accel[1]),
-				sensor_value_to_double(&accel[2]));
+		       sensor_value_to_double(&accel[0]), sensor_value_to_double(&accel[1]),
+		       sensor_value_to_double(&accel[2]));
 
 		k_sleep(K_MSEC(2000));
 	}

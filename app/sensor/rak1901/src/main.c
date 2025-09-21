@@ -23,21 +23,18 @@ int main(void)
 
 		ret = sensor_sample_fetch(dev);
 		if (ret == 0) {
-			ret = sensor_channel_get(dev, SENSOR_CHAN_AMBIENT_TEMP,
-						&temp);
+			ret = sensor_channel_get(dev, SENSOR_CHAN_AMBIENT_TEMP, &temp);
 		}
 		if (ret == 0) {
-			ret = sensor_channel_get(dev, SENSOR_CHAN_HUMIDITY,
-						&hum);
+			ret = sensor_channel_get(dev, SENSOR_CHAN_HUMIDITY, &hum);
 		}
 		if (ret != 0) {
 			printf("RAK1901(SHTC3): failed: %d\n", ret);
 			break;
 		}
 
-		printf("RAK1901(SHTC3): %.2f Cel ; %0.2f %%RH\n",
-				sensor_value_to_double(&temp),
-				sensor_value_to_double(&hum));
+		printf("RAK1901(SHTC3): %.2f Cel ; %0.2f %%RH\n", sensor_value_to_double(&temp),
+		       sensor_value_to_double(&hum));
 
 		k_sleep(K_MSEC(2000));
 	}

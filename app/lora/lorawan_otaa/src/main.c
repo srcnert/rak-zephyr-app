@@ -4,7 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-
 #include <zephyr/device.h>
 #include <zephyr/kernel.h>
 #include <zephyr/devicetree.h>
@@ -58,13 +57,13 @@ int main(void)
 	}
 
 	ret = rak_adc_init();
-	if(ret != 0) {
+	if (ret != 0) {
 		LOG_ERR("Failed to init adc: %d", ret);
 		return 0;
 	}
 
 	ret = rak_lorawan_init();
-	if(ret != 0) {
+	if (ret != 0) {
 		LOG_ERR("Failed to start lorawan: %d", ret);
 		return 0;
 	}

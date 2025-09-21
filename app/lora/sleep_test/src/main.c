@@ -4,7 +4,7 @@
 #include <zephyr/drivers/lora.h>
 #include <zephyr/irq.h>
 
-#if defined (CONFIG_BOARD_RAK3112)
+#if defined(CONFIG_BOARD_RAK3112)
 #include <esp_sleep.h>
 #include <driver/rtc_io.h>
 #endif
@@ -19,7 +19,8 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
-static void led_init() {
+static void led_init()
+{
 	if (!gpio_is_ready_dt(&led)) {
 		LOG_ERR("LED is not ready!");
 		return;
@@ -51,7 +52,8 @@ static void led_init() {
  */
 static const struct device *lora_dev = DEVICE_DT_GET(DT_ALIAS(lora0));
 
-int main(void) {
+int main(void)
+{
 #if defined(CONFIG_BT_PERIPHERAL)
 	int ret = rak_ble_peripheral_init();
 	if (ret) {
@@ -69,7 +71,7 @@ int main(void) {
 
 	LOG_INF("Sleep Test! %s", CONFIG_BOARD);
 
-#if defined (CONFIG_BOARD_RAK3112)
+#if defined(CONFIG_BOARD_RAK3112)
 	switch (esp_sleep_get_wakeup_cause()) {
 	case ESP_SLEEP_WAKEUP_TIMER:
 		LOG_INF("Wake up from timer.");
@@ -97,7 +99,7 @@ int main(void) {
 	(void)irq_lock();
 
 	/* For timer wakeup you must leave RTC peripherals ON */
-    esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_ON);
+	esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_ON);
 	esp_deep_sleep_start();
 
 	/* Never reached here! */

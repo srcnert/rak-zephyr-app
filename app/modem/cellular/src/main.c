@@ -9,7 +9,8 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
-int main(void) {
+int main(void)
+{
 	int ret = -1;
 
 #if defined(CONFIG_BT_PERIPHERAL)

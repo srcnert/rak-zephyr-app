@@ -32,16 +32,25 @@ static const struct device *temp_dev = DEVICE_DT_GET(DT_ALIAS(temp_sensor));
 static const struct device *lora_dev = DEVICE_DT_GET(DT_ALIAS(lora0));
 
 /* Customize based on network configuration */
-#define LORAWAN_APP_KEY 	{ 0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, \
-							  0xAB, 0xF7, 0x15, 0x88, 0x09, 0xCF, 0x4F, 0x3C }
-#define LORAWAN_DEV_EUI 	{ 0xDD, 0xEE, 0xAA, 0xDD, 0xBB, 0xEE, 0xEE, 0xFF }
-#define LORAWAN_JOIN_EUI 	{ 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 }
+#define LORAWAN_APP_KEY                                                                            \
+	{                                                                                          \
+		0x2B, 0x7E, 0x15, 0x16, 0x28, 0xAE, 0xD2, 0xA6, 0xAB, 0xF7, 0x15, 0x88, 0x09,      \
+			0xCF, 0x4F, 0x3C                                                           \
+	}
+#define LORAWAN_DEV_EUI                                                                            \
+	{                                                                                          \
+		0xDD, 0xEE, 0xAA, 0xDD, 0xBB, 0xEE, 0xEE, 0xFF                                     \
+	}
+#define LORAWAN_JOIN_EUI                                                                           \
+	{                                                                                          \
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00                                     \
+	}
 
 /* 1000 msec = 1 sec */
-#define SLEEP_TIME_MS (3*60*1000)
+#define SLEEP_TIME_MS (3 * 60 * 1000)
 
 #define LORAWAN_THREAD_STACKSIZE 4096
-#define LORAWAN_THREAD_PRIORITY 10
+#define LORAWAN_THREAD_PRIORITY  10
 
 struct publish_payload {
 	int32_t temp;
@@ -55,7 +64,8 @@ static const struct json_obj_descr json_descr[] = {
 	JSON_OBJ_DESCR_PRIM(struct publish_payload, batt, JSON_TOK_NUMBER),
 };
 
-int rak_lorawan_init() {
+int rak_lorawan_init()
+{
 	int ret = 0;
 
 #if TEST_BLINK
@@ -86,7 +96,7 @@ int rak_lorawan_init() {
 }
 
 static void lorawan_dl_callback(uint8_t port, uint8_t flags, int16_t rssi, int8_t snr, uint8_t len,
-			const uint8_t *hex_data)
+				const uint8_t *hex_data)
 {
 	LOG_INF("Port %d, Pending %d, RSSI %ddB, SNR %ddBm, Time %d", port,
 		flags & LORAWAN_DATA_PENDING, rssi, snr, !!(flags & LORAWAN_TIME_UPDATED));
@@ -115,10 +125,8 @@ void lorawan_thread_handler(void)
 	double batt_val = 0.0;
 	int ret;
 
-	struct lorawan_downlink_cb downlink_cb = {
-		.port = LW_RECV_PORT_ANY,
-		.cb = lorawan_dl_callback
-	};
+	struct lorawan_downlink_cb downlink_cb = {.port = LW_RECV_PORT_ANY,
+						  .cb = lorawan_dl_callback};
 
 	lorawan_register_downlink_callback(&downlink_cb);
 	lorawan_register_dr_changed_callback(lorawan_datarate_changed);
@@ -151,12 +159,10 @@ void lorawan_thread_handler(void)
 	while (1) {
 		ret = sensor_sample_fetch(temp_dev);
 		if (ret == 0) {
-			ret = sensor_channel_get(temp_dev, SENSOR_CHAN_AMBIENT_TEMP,
-						&temp);
+			ret = sensor_channel_get(temp_dev, SENSOR_CHAN_AMBIENT_TEMP, &temp);
 		}
 		if (ret == 0) {
-			ret = sensor_channel_get(temp_dev, SENSOR_CHAN_HUMIDITY,
-						&hum);
+			ret = sensor_channel_get(temp_dev, SENSOR_CHAN_HUMIDITY, &hum);
 		}
 		if (ret != 0) {
 			temp_val = 0.0;
@@ -173,22 +179,22 @@ void lorawan_thread_handler(void)
 			batt_val = 0.0;
 			LOG_ERR("ADC: failed: %d", ret);
 		} else {
-			LOG_INF("V_BAT = %"PRId32" mV", (int32_t) (batt_val*1000.0));
+			LOG_INF("V_BAT = %" PRId32 " mV", (int32_t)(batt_val * 1000.0));
 		}
 
-		struct publish_payload pl = {.temp = (temp_val*1000.0),
-									 .hum = (hum_val*1000.0),
-									 .batt = (batt_val*1000.0)};
+		struct publish_payload pl = {.temp = (temp_val * 1000.0),
+					     .hum = (hum_val * 1000.0),
+					     .batt = (batt_val * 1000.0)};
 
-		ret = json_obj_encode_buf(json_descr, ARRAY_SIZE(json_descr), &pl, json_buffer, sizeof(json_buffer));
+		ret = json_obj_encode_buf(json_descr, ARRAY_SIZE(json_descr), &pl, json_buffer,
+					  sizeof(json_buffer));
 		if (ret != 0) {
 			LOG_ERR("Failed to encode json: %d", ret);
 		} else {
 			LOG_INF("Data size: %d", strlen(json_buffer));
 		}
 
-		ret = lorawan_send(2, json_buffer, strlen(json_buffer),
-						   LORAWAN_MSG_CONFIRMED);
+		ret = lorawan_send(2, json_buffer, strlen(json_buffer), LORAWAN_MSG_CONFIRMED);
 
 		/*
 		 * Note: The stack may return -EAGAIN if the provided data
@@ -209,9 +215,10 @@ void lorawan_thread_handler(void)
 		k_sleep(K_MSEC(SLEEP_TIME_MS));
 	}
 }
-K_THREAD_DEFINE(lorawan_thread_id, LORAWAN_THREAD_STACKSIZE, lorawan_thread_handler, NULL, NULL, NULL,
-		LORAWAN_THREAD_PRIORITY, 0, -1);
+K_THREAD_DEFINE(lorawan_thread_id, LORAWAN_THREAD_STACKSIZE, lorawan_thread_handler, NULL, NULL,
+		NULL, LORAWAN_THREAD_PRIORITY, 0, -1);
 
-void rak_lorawan_thread_start() {
+void rak_lorawan_thread_start()
+{
 	k_thread_start(lorawan_thread_id);
 }

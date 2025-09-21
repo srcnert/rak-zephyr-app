@@ -12,7 +12,8 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
-static void led_init() {
+static void led_init()
+{
 	if (!gpio_is_ready_dt(&led)) {
 		LOG_ERR("LED is not ready!");
 		return;

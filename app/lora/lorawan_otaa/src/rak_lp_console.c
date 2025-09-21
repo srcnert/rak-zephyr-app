@@ -7,8 +7,7 @@ LOG_MODULE_REGISTER(rak_lp_console, LOG_LEVEL_DBG);
 
 int rak_lp_console_init()
 {
-	const struct device *const dev =
-		DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
+	const struct device *const dev = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
 
 	if (!device_is_ready(dev)) {
 		LOG_ERR("Console device not ready");

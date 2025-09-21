@@ -28,13 +28,11 @@ double correction_ratio = 1.1;
 double correction_ratio = (2.13) * (1.3);
 #endif
 
-#if !DT_NODE_EXISTS(DT_PATH(zephyr_user)) || \
-	!DT_NODE_HAS_PROP(DT_PATH(zephyr_user), io_channels)
+#if !DT_NODE_EXISTS(DT_PATH(zephyr_user)) || !DT_NODE_HAS_PROP(DT_PATH(zephyr_user), io_channels)
 #error "No suitable devicetree overlay specified"
 #endif
 
-#define DT_SPEC_AND_COMMA(node_id, prop, idx) \
-	ADC_DT_SPEC_GET_BY_IDX(node_id, idx),
+#define DT_SPEC_AND_COMMA(node_id, prop, idx) ADC_DT_SPEC_GET_BY_IDX(node_id, idx),
 
 /* Data of ADC io-channels specified in devicetree. */
 static const struct adc_dt_spec adc_channel = ADC_DT_SPEC_GET(DT_PATH(zephyr_user));
@@ -70,7 +68,7 @@ int rak_adc_init()
 	int32_t vref_mv = (int32_t)adc_ref_internal(adc_channel.dev);
 	enum adc_gain gain = adc_channel.channel_cfg.gain;
 	adc_gain_invert(gain, &vref_mv);
-	vref = (double) (vref_mv/1000.0);
+	vref = (double)(vref_mv / 1000.0);
 	resolution = adc_channel.resolution;
 
 	LOG_INF("ADC Vref: %d", vref_mv);
@@ -81,10 +79,10 @@ int rak_adc_init()
 	return ret;
 }
 
-int rak_adc_sample(double *value) {
+int rak_adc_sample(double *value)
+{
 	int ret = -1;
 	int32_t val;
-
 
 	ret = adc_read_dt(&adc_channel, &sequence);
 	if (ret < 0) {
@@ -93,7 +91,7 @@ int rak_adc_sample(double *value) {
 	}
 
 	val = (int32_t)buf;
-	LOG_DBG("ADC: %"PRId32, val);
+	LOG_DBG("ADC: %" PRId32, val);
 
 	/*
 	If rak19007 board is used as a base board,
@@ -110,6 +108,7 @@ int rak_adc_sample(double *value) {
 	Please connect a lipo battery to your RAK19007 board!
 	*/
 
-	*value = correction_ratio * ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
+	*value = correction_ratio *
+		 ((vref * (((double)val) / ((double)pow(2, resolution))) * (5.0)) / (3.0));
 	return ret;
 }

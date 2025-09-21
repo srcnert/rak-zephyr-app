@@ -10,9 +10,6 @@
 #define MODEM_CELLULAR_DATA_ICCID_LEN        (22)
 #define MODEM_CELLULAR_DATA_MANUFACTURER_LEN (65)
 #define MODEM_CELLULAR_DATA_FW_VERSION_LEN   (65)
-#define MODEM_CELLULAR_DATA_OPERATOR_LEN     (32)
-#define MODEM_CELLULAR_DATA_IP_ADDR_LEN      (32)
-#define MODEM_CELLULAR_DATA_DATE_TIME_LEN    (32)
 
 typedef struct {
 	enum cellular_registration_status reg_status;
@@ -24,7 +21,6 @@ typedef struct {
 	uint8_t iccid[MODEM_CELLULAR_DATA_ICCID_LEN];
 	uint8_t fw_version[MODEM_CELLULAR_DATA_FW_VERSION_LEN];
 } rak_modem_info;
-
 
 int rak_modem_init(void);
 int rak_modem_connect(int timeout_sec);

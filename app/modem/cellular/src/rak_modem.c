@@ -54,8 +54,8 @@ int rak_modem_init()
 
 int rak_modem_connect(int timeout_sec)
 {
-	int ret = net_mgmt_event_wait_on_iface(iface, NET_EVENT_L4_CONNECTED,
-                                        NULL, NULL, NULL, K_SECONDS(timeout_sec));
+	int ret = net_mgmt_event_wait_on_iface(iface, NET_EVENT_L4_CONNECTED, NULL, NULL, NULL,
+					       K_SECONDS(timeout_sec));
 	if (ret != 0) {
 		LOG_ERR("L4 was not connected in time: %d", ret);
 		return ret;
@@ -86,7 +86,6 @@ void rak_modem_suspend()
 {
 	(void)pm_device_action_run(mdm, PM_DEVICE_ACTION_SUSPEND);
 	(void)pm_device_action_run(mdm_uart, PM_DEVICE_ACTION_SUSPEND);
-
 }
 
 int rak_modem_if_up()
@@ -103,7 +102,8 @@ int rak_modem_get_cellular_info(rak_modem_info *modem_info)
 {
 	int ret;
 
-	ret = cellular_get_registration_status(mdm, CELLULAR_ACCESS_TECHNOLOGY_LTE_CAT_M1, &modem_info->reg_status);
+	ret = cellular_get_registration_status(mdm, CELLULAR_ACCESS_TECHNOLOGY_LTE_CAT_M1,
+					       &modem_info->reg_status);
 	if (ret) {
 		LOG_ERR("Failed to get registration status: %d", ret);
 	}
@@ -113,32 +113,38 @@ int rak_modem_get_cellular_info(rak_modem_info *modem_info)
 	// 	LOG_ERR("Failed to get signal: %d", ret);
 	// }
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_IMEI, modem_info->imei, sizeof(modem_info->imei));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_IMEI, modem_info->imei,
+				      sizeof(modem_info->imei));
 	if (ret) {
 		LOG_ERR("Failed to get modem imei: %d", ret);
 	}
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MODEL_ID, modem_info->model_id, sizeof(modem_info->model_id));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MODEL_ID, modem_info->model_id,
+				      sizeof(modem_info->model_id));
 	if (ret) {
 		LOG_ERR("Failed to get model id: %d", ret);
 	}
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MANUFACTURER, modem_info->manufacturer, sizeof(modem_info->manufacturer));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_MANUFACTURER,
+				      modem_info->manufacturer, sizeof(modem_info->manufacturer));
 	if (ret) {
 		LOG_ERR("Failed to get manufacturer: %d", ret);
 	}
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_IMSI, modem_info->imsi, sizeof(modem_info->imsi));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_IMSI, modem_info->imsi,
+				      sizeof(modem_info->imsi));
 	if (ret) {
 		LOG_ERR("Failed to get imsi: %d", ret);
 	}
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_ICCID, modem_info->iccid, sizeof(modem_info->iccid));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_SIM_ICCID, modem_info->iccid,
+				      sizeof(modem_info->iccid));
 	if (ret) {
 		LOG_ERR("Failed to get iccid: %d", ret);
 	}
 
-	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_FW_VERSION, modem_info->fw_version, sizeof(modem_info->fw_version));
+	ret = cellular_get_modem_info(mdm, CELLULAR_MODEM_INFO_FW_VERSION, modem_info->fw_version,
+				      sizeof(modem_info->fw_version));
 	if (ret) {
 		LOG_ERR("Failed to get fw version: %d", ret);
 	}
@@ -146,7 +152,8 @@ int rak_modem_get_cellular_info(rak_modem_info *modem_info)
 	return 0;
 }
 
-void rak_modem_print_info(rak_modem_info info) {
+void rak_modem_print_info(rak_modem_info info)
+{
 	LOG_INF("================================");
 	LOG_INF("IMEI: %s", info.imei);
 	LOG_INF("MODEL_ID: %s", info.model_id);

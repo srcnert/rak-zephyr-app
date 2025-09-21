@@ -20,7 +20,8 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
-static void led_init() {
+static void led_init()
+{
 	if (!gpio_is_ready_dt(&led)) {
 		LOG_ERR("LED is not ready!");
 	}
@@ -57,7 +58,8 @@ static const struct device *sensor_light = DEVICE_DT_GET(DT_ALIAS(light_sensor))
 static const struct device *sensor_accel = DEVICE_DT_GET(DT_ALIAS(accel_sensor));
 static const struct device *sensor_press = DEVICE_DT_GET(DT_ALIAS(press_sensor));
 
-int main(void) {
+int main(void)
+{
 	int ret = -1;
 
 #if defined(CONFIG_BT_PERIPHERAL)
