@@ -17,7 +17,7 @@ After that, you must install toolchain via:
 nrfutil install device
 nrfutil install toolchain-manager
 # Install a specific version toolchain:
-nrfutil toolchain-manager install --ncs-version v3.0.2
+nrfutil toolchain-manager install --ncs-version v3.1.1
 # List your currently installed toolchain and learn its path:
 nrfutil toolchain-manager list
 # Launch toolchain commands in the environment directly:

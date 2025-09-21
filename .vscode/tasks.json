@@ -59,14 +59,10 @@
             "label": "flash",
             "type": "shell",
             "command": "west",
-            "args": ["flash"],
-            "problemMatcher": ["$gcc"]
-        },
-        {
-            "label": "patch",
-            "type": "shell",
-            "command": "west",
-            "args": ["patch"],
+            /* ARM base devices */
+            "args": ["flash", "--runner", "jlink"],
+            /* XTENSA base devices */
+            // "args": ["flash"],
             "problemMatcher": ["$gcc"]
         },
         {
