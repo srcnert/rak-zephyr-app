@@ -1,7 +1,7 @@
 RAKwireless Zephyr Applications
 ===============================
 
-This project is prepared to use RAKwireless LoRa modules with Zephyr project. This repo is prepared to use RAK3112, RAK3172, RAK4631 and RAK11720 stamp modules. All sample projects are tested on RAK19007 Wisblock base board.
+This project is prepared to use RAKwireless LoRa modules with Zephyr project. RAK3112, RAK3172, RAK4631 and RAK11720 stamp modules can be used with this repo. All sample projects are tested on RAK19007 Wisblock base board.
 
 There is also support for the RAK5010 BLE to GPRS/LTE-M/NB-IoT industrial gateway.
 
@@ -41,8 +41,6 @@ Please firstly install 'wget' tool according to your operating system. After tha
 must apply following commands:
 
 ```shell
-# Run command and continue at newly opened terminal.
-nrfutil toolchain-manager launch --terminal
 # Python environment is missing the tqdm package, which is required by Zephyr's
 # west tool to display progress bars during installations.
 pip install tqdm

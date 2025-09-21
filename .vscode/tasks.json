@@ -59,10 +59,7 @@
             "label": "flash",
             "type": "shell",
             "command": "west",
-            /* ARM base devices */
-            "args": ["flash", "--runner", "jlink"],
-            /* XTENSA base devices */
-            // "args": ["flash"],
+            "args": ["flash", "--runner", "${input:runner_type}"],
             "problemMatcher": ["$gcc"]
         },
         {
@@ -95,6 +92,12 @@
             "type": "pickString",
             "description": "Select the build type:",
             "options": ["--no-sysbuild","--sysbuild"]
+        },
+        {
+            "id": "runner_type",
+            "type": "pickString",
+            "description": "Select the build type:",
+            "options": ["esp32","jlink"]
         },
         {
             "id": "board_conf_ble",
