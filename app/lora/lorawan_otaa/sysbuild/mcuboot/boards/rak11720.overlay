@@ -2,9 +2,4 @@
 	chosen {
 		zephyr,code-partition = &boot_partition;
 	};
-
-	aliases {
-		blue-led = &blue_led;
-		green-led = &green_led;
-	};
 };

@@ -1,0 +1,9 @@
+sample:
+  name: Cellular
+tests:
+  sample.modem.cellular:
+    platform_allow:
+      - rak5010
+    extra_args: EXTRA_CONF_FILE=overlay_ble.conf
+    tags: rak
+    build_only: true

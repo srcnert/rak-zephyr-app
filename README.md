@@ -31,13 +31,13 @@ cd rak-zephyr-workspace
 west update
 ```
 
-If you are RAK3112 module user, following steps must be applied to use this board.
+If you are RAK3112 module user, following steps must be applied to use this module.
 
 Firstly please install the Zephyr Software Development Kit (SDK) that contains toolchains
 for each of Zephyr’s supported architectures, which including compiler, assembler,
 linker and other programs required to build Zephyr applications.
 
-Please firstly install 'wget' tool according to you operating system. After that, the user
+Please firstly install 'wget' tool according to your operating system. After that, the user
 must apply following commands:
 
 ```shell
@@ -101,14 +101,6 @@ To build an application, open '../rak-zephyr-workspace/rak-zephyr-app' directory
 
 *** McuMgr is necessary to use mcumgr commands. Please check dfu application for details.
 
-Please run 'west patch apply' command to fix following problems:
-- Rak3172 i2c is not working correctly with PM. https://github.com/zephyrproject-rtos/zephyr/issues/37414
-- Adding RTT support for Rak11720.
-- Fixing Apollo3's adc problem.
-- Fixing build problem if PM and GPIO is used together for apollo3.
-- Sx1262 idle current problem.
-- Fixing wrongly defined clock settings and RF controller pins. https://github.com/zephyrproject-rtos/zephyr/pull/86037
-
 You can build your project via 'VsCode --> Terminal --> Run Build Task' option.
 For example, if you wanna build 'app/adc' example for rak3172, please select following options:
 - Select the board: rak3172
@@ -143,11 +135,11 @@ OPENOCD and GDB tools are used. Please check Digikey video (https://www.youtube.
 Please also take a look for detailed information:
 https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/api-guides/jtag-debugging/index.html
 
-Shortly, OPENOCD (https://github.com/xpack-dev-tools/openocd-xpack/releases) must be installed for your operating system. There is no installer for it and you just unzip it to appropriate location and please open '../.vscode/settings.json' file and set OPENOCD_PATH parameter.
+Shortly, OPENOCD (https://github.com/xpack-dev-tools/openocd-xpack/releases) must be installed for your operating system. There is no installer for it and you just unzip it to appropriate location and please open '../.vscode/settings.json' file and set 'OPENOCD_PATH' parameter.
 
-If you are Mac OS user, you must go to Settings of your Mac and then Privacy&Security section. After that, run "openocd --version" command continuously and then click OPEN ANYWAY button on Privacy&Security section because some openocd files was blocked to protect your Mac. The aim is to give permision to all related openocd exes.
+If you are Mac OS user, you must go to Settings of your Mac and then Privacy&Security section. After that, run "openocd --version" command continuously and then click OPEN ANYWAY button on Privacy&Security section. The reason is that some openocd files was blocked by OS to protect your Mac. The aim is to give permision to all related openocd exes.
 
-If all steps are completed successfully, you must run following command and you must see that RAK3112 module is connected and server is running.
+If all steps are completed successfully, run following command and see that RAK3112 module is connected and openocd server is running.
 
 ```shell
 openocd -f board/esp32s3-builtin.cfg
@@ -157,9 +149,9 @@ You can fing GDB tool inside your "/your/path/to/toolchains/0123456789/opt/zephy
 'Cortex-Debug' extension is used with "xtensa-espressif_esp32s3_zephyr-elf-gdb" exe to debug rak3112 module.
 Please select "Cortex Debug XTENSA" configuration at VS Code IDE "Run and Dubug" section.
 
-Do NOT ASSIGN GPIO19 and GPIO20 to any peripheral!!!
+Do NOT ASSIGN GPIO19 and GPIO20 to any peripheral!!! They are USB pins!!!
+
 If you brick RAK3112 module, please apply following steps.
-- Set BOOT pin to GND.
-- Power up the module
+- Set BOOT pin to GND and reset module.
 - Program board with "west flash"
-- Disconnect BOOT pin from GND
+- Disconnect BOOT pin from GND and reset module.

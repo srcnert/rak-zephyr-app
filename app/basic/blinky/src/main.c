@@ -1,11 +1,8 @@
 #include <zephyr/kernel.h>
-#include <zephyr/pm/pm.h>
-#include <zephyr/pm/device.h>
 #include <zephyr/drivers/gpio.h>
-#include <esp_sleep.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
 /* 1000 msec = 1 sec */
 #define SLEEP_TIME_MS 1000
@@ -46,7 +43,7 @@ int main(void)
 	while (1) {
 		gpio_pin_toggle_dt(&led);
 		led_state = !led_state;
-		printf("LED state: %s\n", led_state ? "ON" : "OFF");
+		LOG_INF("LED state: %s", led_state ? "ON" : "OFF");
 
 		k_msleep(SLEEP_TIME_MS);
 	}

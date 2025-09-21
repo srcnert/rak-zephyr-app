@@ -1,11 +1,8 @@
 / {
 	chosen {
 		zephyr,console = &cdc_acm_uart0;
+		zephyr,shell-uart = &cdc_acm_uart0;
 	};
-};
-
-&reg1 {
-	regulator-initial-mode = <NRF5X_REG_MODE_DCDC>;
 };
 
 &zephyr_udc0 {

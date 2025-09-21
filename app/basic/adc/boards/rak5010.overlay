@@ -1,8 +1,4 @@
 / {
-	chosen {
-		zephyr,console = &cdc_acm_uart0;
-	};
-
 	zephyr,user {
 		io-channels = <&adc 2>; // P0.04
 	};
@@ -19,11 +15,5 @@
 		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
 		zephyr,input-positive = <NRF_SAADC_AIN2>;
 		zephyr,resolution = <12>;
-	};
-};
-
-&zephyr_udc0 {
-	cdc_acm_uart0: cdc_acm_uart0 {
-		compatible = "zephyr,cdc-acm-uart";
 	};
 };

@@ -1,7 +1,7 @@
 Overview
 ********
 
-The project shows how to reach lowest idle current for RAKwireless RAK5010 board
+The project shows how to connect LTE-M network by using RAKwireless RAK5010 board
 on Zephyr OS.
 
 Building and Running
@@ -15,7 +15,7 @@ Building for rak5010
 :zephyr:board:`rak5010` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/modem/sleep_test
+   :zephyr-app: app/modem/cellular
    :board: rak5010
    :goals: build flash
    :west-args: --no-sysbuild

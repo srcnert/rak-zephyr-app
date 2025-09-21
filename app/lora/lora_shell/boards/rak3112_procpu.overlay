@@ -1,0 +1,6 @@
+/ {
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+	};
+};

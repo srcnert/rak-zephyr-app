@@ -6,7 +6,7 @@ Overview
 RAK3112 is a WisDuo module which integrating an ESP32-S3 16MB of flash chip
 together with a Semtech SX1262 LoRa® transceiver. This module is ideal for
 various IoT applications such as home automation, sensor networks, building
-automation, and other IoT network applications.
+automation, and other IoT network applications and AI applications.
 
 Hardware
 ********
@@ -60,7 +60,7 @@ Run the command below to retrieve those files.
 
 .. note::
 
-   It is recommended running the command above after :file:`west update`.
+It is recommended running the command above after :file:`west update`.
 
 Building & Flashing
 *******************
@@ -81,14 +81,7 @@ Manual build
 ============
 
 During the development cycle, it is intended to build & flash as quickly possible.
-For that reason, images can be built one at a time using traditional build.
-
-The instructions following are relevant for both manual build and sysbuild.
-The only difference is the structure of the build directory.
-
-.. note::
-
-   Remember that bootloader (MCUboot) needs to be flash at least once.
+For that reason, images can be built once at a time using traditional build.
 
 Build and flash applications as usual (see :ref:`build_an_application` and
 :ref:`application_run` for more details).
@@ -115,12 +108,13 @@ message in the monitor:
 Debugging
 *********
 
-ESP32-S3 support on OpenOCD is available at `OpenOCD ESP32`_.
+ESP32-S3 support on OpenOCD and it is available at `OpenOCD ESP32`_.
 
 ESP32-S3 has a built-in JTAG circuitry and can be debugged without
 any additional chip. Only an USB cable connected to the D+/D- pins is necessary.
 
-Further documentation can be obtained from the SoC vendor in `JTAG debugging for ESP32-S3`_.
+Further documentation can be obtained from the SoC vendor
+in `JTAG debugging for ESP32-S3`_.
 
 Here is an example for building the :zephyr:code-sample:`hello_world` application.
 

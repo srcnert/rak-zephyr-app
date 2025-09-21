@@ -1,0 +1,8 @@
+sample:
+  name: WiFi Shell
+tests:
+  sample.wifi.wifi_shell:
+    platform_allow:
+      - rak3112/esp32s3/procpu
+    tags: rak
+    build_only: true

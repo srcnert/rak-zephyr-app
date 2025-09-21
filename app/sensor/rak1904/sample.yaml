@@ -1,0 +1,12 @@
+sample:
+  name: RAK1904
+tests:
+  sample.sensor.rak1904:
+    platform_allow:
+      - rak3112/esp32s3/procpu
+      - rak3172
+      - rak4631
+      - rak5010
+      - rak11720
+    tags: rak
+    build_only: true

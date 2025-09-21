@@ -2,6 +2,12 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/lora.h>
+#include <zephyr/irq.h>
+
+#if defined (CONFIG_BOARD_RAK3112)
+#include <esp_sleep.h>
+#include <driver/rtc_io.h>
+#endif
 
 #include "rak_ble_peripheral.h"
 
@@ -9,8 +15,7 @@
 LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 
 /*
- * A build error on this line means your board is unsupported.
- * See the sample documentation for information on how to fix this.
+ * Get LED GPIO
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
@@ -63,7 +68,40 @@ int main(void) {
 	led_init();
 
 	LOG_INF("Sleep Test! %s", CONFIG_BOARD);
-	printk("Sleep Test! %s\n", CONFIG_BOARD);
+
+#if defined (CONFIG_BOARD_RAK3112)
+	switch (esp_sleep_get_wakeup_cause()) {
+	case ESP_SLEEP_WAKEUP_TIMER:
+		LOG_INF("Wake up from timer.");
+		break;
+	case ESP_SLEEP_WAKEUP_UNDEFINED:
+	default:
+		LOG_INF("Not a deep sleep reset.");
+	}
+
+	/* Enabling timer wakeup for 30 seconds */
+	esp_sleep_enable_timer_wakeup(30 * 1000000);
+
+	/* Hold related pins on required levels during deep sleep */
+	uint8_t dio1_pin = 47;
+	uint8_t reset_pin = 8;
+	uint8_t cs_pin = 7;
+	rtc_gpio_pulldown_en((gpio_num_t)dio1_pin);
+	rtc_gpio_pullup_en((gpio_num_t)reset_pin);
+	rtc_gpio_pullup_en((gpio_num_t)cs_pin);
+
+	LOG_INF("Powering off...");
+
+	k_busy_wait(1000000);
+
+	(void)irq_lock();
+
+	/* For timer wakeup you must leave RTC peripherals ON */
+    esp_sleep_pd_config(ESP_PD_DOMAIN_RTC_PERIPH, ESP_PD_OPTION_ON);
+	esp_deep_sleep_start();
+
+	/* Never reached here! */
+#endif
 
 	while (1) {
 		k_sleep(K_FOREVER);

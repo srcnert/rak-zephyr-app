@@ -8,16 +8,14 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
 #define SLEEP_TIME_MS 1000
 
 /*
- * A build error on this line means your board is unsupported.
- * See the sample documentation for information on how to fix this.
+ * Get LED GPIO
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
-int main(void)
-{
-
+static void led_init() {
 	if (!gpio_is_ready_dt(&led)) {
 		LOG_ERR("LED is not ready!");
+		return;
 	}
 
 	int ret = gpio_pin_configure_dt(&led, GPIO_OUTPUT_ACTIVE);
@@ -29,15 +27,23 @@ int main(void)
 	if (ret) {
 		LOG_ERR("Failed to control LED!");
 	}
-
 	k_msleep(1000);
-
 	ret = gpio_pin_set_dt(&led, 0); // OFF
 	if (ret) {
 		LOG_ERR("Failed to control LED!");
 	}
 
-	LOG_INF("Shell! %s", CONFIG_BOARD);
+	ret = gpio_pin_configure_dt(&led, GPIO_DISCONNECTED);
+	if (ret) {
+		LOG_ERR("Failed to disconnect LED!");
+	}
+}
+
+int main(void)
+{
+	led_init();
+
+	LOG_INF("LoRa Shell! %s", CONFIG_BOARD);
 
 	return 0;
 }

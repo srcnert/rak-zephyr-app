@@ -1,0 +1,41 @@
+/ {
+	zephyr,user {
+		io-channels = <&adc0 0>; // GP1
+	};
+
+	chosen {
+		zephyr,console = &usb_serial;
+		zephyr,shell-uart = &usb_serial;
+		zephyr,uart-mcumgr = &usb_serial;
+	};
+
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+		temp-sensor = &shtc3;
+	};
+};
+
+&adc0 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	channel@0 {
+		/* https://docs.zephyrproject.org/latest/build/dts/api/bindings/adc/espressif%2Cesp32-adc.html */
+		reg = <0>;
+		zephyr,gain = "ADC_GAIN_1_4"; /* 11dB */
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_DEFAULT>;
+		zephyr,resolution = <12>;
+	};
+};
+
+&i2c0 {
+	status = "okay";
+	clock-frequency = <I2C_BITRATE_FAST>;
+	shtc3: shtc3@70 {
+		compatible = "sensirion,shtc3", "sensirion,shtcx";
+		reg = <0x70>;
+		measure-mode = "normal";
+	};
+};

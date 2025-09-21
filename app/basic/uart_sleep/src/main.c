@@ -51,9 +51,9 @@ int main(void)
 #endif
 
 	while (1) {
-		// pm_device_action_run(uart_dev, PM_DEVICE_ACTION_RESUME);
+		pm_device_action_run(uart_dev, PM_DEVICE_ACTION_RESUME);
 		print_uart("Hello! Uart Sleep Test.\r\n");
-		// pm_device_action_run(uart_dev, PM_DEVICE_ACTION_SUSPEND);
+		pm_device_action_run(uart_dev, PM_DEVICE_ACTION_SUSPEND);
 
 		k_msleep(10000);
 	}

@@ -16,6 +16,17 @@ Building and Running
 This project outputs RAK1901 sensor (SHTC3) data to the console.
 It requires a RAK1901 sensor to connected to RAK19007 base board.
 
+Building for rak3112
+--------------------
+
+:zephyr:board:`rak3112` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/sensor/rak1901
+   :board: rak3112/esp32s3/procpu
+   :goals: build flash
+   :west-args: --no-sysbuild
+
 Building for rak3172
 --------------------
 
@@ -34,7 +45,18 @@ Building for rak4631
 
 .. zephyr-app-commands::
    :zephyr-app: app/sensor/rak1901
-   :board: rak4631, rak5010
+   :board: rak4631
+   :goals: build flash
+   :west-args: --no-sysbuild
+
+Building for rak5010
+--------------------
+
+:zephyr:board:`rak5010` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/sensor/rak1901
+   :board: rak5010
    :goals: build flash
    :west-args: --no-sysbuild
 

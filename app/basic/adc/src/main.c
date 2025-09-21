@@ -10,7 +10,7 @@
 #include <zephyr/drivers/adc.h>
 
 #include <zephyr/logging/log.h>
-LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
+LOG_MODULE_REGISTER(main, LOG_LEVEL_INF);
 
 #if !DT_NODE_EXISTS(DT_PATH(zephyr_user)) || \
 	!DT_NODE_HAS_PROP(DT_PATH(zephyr_user), io_channels)
@@ -50,9 +50,18 @@ int main(void)
 		}
 	}
 
+	/* As an example, just lipo battery voltage will be read.
+	 * If you will use more than one channel, please read these parameters
+	 * for every channel.
+	 */
+#if defined(CONFIG_BOARD_RAK3112)
+	/* https://docs.espressif.com/projects/esp-idf/en/v4.4/esp32s3/api-reference/peripherals/adc.html */
+	int32_t vref_mv = 3100;
+#else
 	int32_t vref_mv = (int32_t)adc_ref_internal(adc_channels[0].dev);
 	enum adc_gain gain = adc_channels[0].channel_cfg.gain;
 	adc_gain_invert(gain, &vref_mv);
+#endif
 	double vref = (double) (vref_mv/1000.0);
 	uint8_t resolution = adc_channels[0].resolution;
 
@@ -68,6 +77,9 @@ int main(void)
 			LOG_INF("Calibrate ADC");
 			sequence.calibrate=true;
 #endif
+
+			LOG_INF("%s, channel %d ", adc_channels[i].dev->name,
+				adc_channels[i].channel_id);
 
 			(void)adc_sequence_init_dt(&adc_channels[i], &sequence);
 
@@ -89,12 +101,16 @@ int main(void)
 			- battery, USB not connected
 				* battery voltage reading
 
-			Due to this, RTT logging is used, please do not connect your usb line
+			Due to this, RTT/UART logging is used, please do not connect your usb line
 			to get correct ADC data!
 
 			Please connect a lipo battery to your RAK19007 board!
 			*/
 			double bat_lvl = 0.0;
+
+#if defined(CONFIG_BOARD_RAK3112)
+			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));
+#endif
 
 #if defined(CONFIG_BOARD_RAK3172)
 			bat_lvl = ((vref * (((double)val) / ((double) pow(2, resolution))) * (5.0)) / (3.0));

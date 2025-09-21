@@ -21,6 +21,17 @@ Building and Running
 
 Build and flash lora_shell example as follow for your board:
 
+Building for rak3112
+--------------------
+
+:zephyr:board:`rak3112` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/lora/lora_shell
+   :board: rak3112/esp32s3/procpu
+   :goals: build flash
+   :west-args: --no-sysbuild
+
 Building for rak3172
 --------------------
 

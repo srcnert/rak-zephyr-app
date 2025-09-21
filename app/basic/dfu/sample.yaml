@@ -1,0 +1,20 @@
+sample:
+  name: DFU
+tests:
+  sample.basic.dfu.uart:
+    platform_allow:
+      - rak3172
+    extra_args: EXTRA_CONF_FILE=overlay_mcuboot.conf
+    sysbuild: true
+    tags: rak
+    build_only: true
+  sample.basic.dfu.ble:
+    platform_allow:
+      - rak3112/esp32s3/procpu
+      - rak4631
+      - rak5010
+      - rak11720
+    extra_args: EXTRA_CONF_FILE=overlay_ble.conf;overlay_mcuboot.conf
+    sysbuild: true
+    tags: rak
+    build_only: true

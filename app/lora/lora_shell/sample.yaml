@@ -1,0 +1,11 @@
+sample:
+  name: LoRa Shell
+tests:
+  sample.lora.lora_shell:
+    platform_allow:
+      - rak3112/esp32s3/procpu
+      - rak3172
+      - rak4631
+      - rak11720
+    tags: rak
+    build_only: true

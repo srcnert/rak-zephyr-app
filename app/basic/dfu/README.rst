@@ -23,9 +23,9 @@ Prerequisites
 Use of a tool
 =============
 
-To interact remotely with the management subsystem on a device, a tool is required to interact with
-it. There are various tools available which are listed on the :ref:`mcumgr_tools_libraries` page
-of the Management subsystem documentation.
+To interact remotely with the management subsystem on a device, a tool is
+required to interact with it. There are various tools available which are listed
+on the :ref:`mcumgr_tools_libraries` page of the nanagement subsystem doc.
 
 For simplified commands, please check mcuboot.md file.
 
@@ -35,13 +35,25 @@ Building and flashing MCUboot
 The below steps describe how to build and run the MCUboot bootloader.
 Detailed instructions can be found in the :ref:`mcuboot` documentation page.
 
-The Zephyr port of MCUboot is essentially a normal Zephyr application, which means that
-it can be built and flashed like normal using ``--sysbuild`` arguments.
+The Zephyr port of MCUboot is essentially a normal Zephyr application, which
+means that it can be built and flashed like normal using ``--sysbuild`` arg.
 
 Building the application
 ************************
 
 The below steps describe how to build and run the dfu sample in Zephyr.
+
+Building for rak3112
+--------------------
+
+:zephyr:board:`rak3112` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/basic/dfu
+   :board: rak3112/esp32s3/procpu
+   :goals: build flash
+   :west-args: --sysbuild
+   :gen-args: -DEXTRA_CONF_FILE="overlay_ble.conf;overlay_mcuboot.conf"
 
 Building for rak3172
 --------------------
@@ -49,7 +61,7 @@ Building for rak3172
 :zephyr:board:`rak3172` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/dfu
+   :zephyr-app: app/basic/dfu
    :board: rak3172
    :goals: build flash
    :west-args: --sysbuild
@@ -61,11 +73,22 @@ Building for rak4631
 :zephyr:board:`rak4631` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/dfu
+   :zephyr-app: app/basic/dfu
    :board: rak4631 rak5010
    :goals: build flash
    :west-args: --sysbuild
    :gen-args: -DEXTRA_CONF_FILE="overlay_ble.conf;overlay_mcuboot.conf"
+
+Building for rak5010
+--------------------
+
+:zephyr:board:`rak5010` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/basic/dfu
+   :board: rak5010
+   :goals: build flash
+   :west-args: --no-sysbuild
 
 Building for rak11720
 ---------------------
@@ -73,7 +96,7 @@ Building for rak11720
 :zephyr:board:`rak11720` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/dfu
+   :zephyr-app: app/basic/dfu
    :board: rak11720
    :goals: build flash
    :west-args: --sysbuild
@@ -82,14 +105,15 @@ Building for rak11720
 Flashing the sample image
 *************************
 
-Upload the :file:`zephyr.signed.bin` file from the previous to image slot-0 of your
-board.  See :ref:`flash_map_api` for details on flash partitioning.
+Upload the :file:`zephyr.signed.bin` file from the previous to image slot-0 of
+your board.  See :ref:`flash_map_api` for details on flash partitioning.
 
-To upload the initial image file to an empty slot-0, use ``west flash`` like normal.
-``west flash`` will automatically detect slot-0 address and confirm the image.
+To upload the initial image file to an empty slot-0, use ``west flash`` like
+normal. ``west flash`` will automatically detect slot-0 address and
+confirm the image.
 
-The *signed* image file needs to be used specifically, otherwise the non-signed version
-will be used and the image won't be runnable.
+The *signed* image file needs to be used specifically, otherwise the non-signed
+version will be used and the image won't be runnable.
 
 Device Firmware Upgrade (DFU)
 *****************************
@@ -111,8 +135,8 @@ The general sequence of a DFU process is as follows:
 Upload the signed image
 =======================
 
-To upload the signed image, refer to the documentation for your chosen tool, select the new
-firmware file to upload and begin the upload.
+To upload the signed image, refer to the documentation for your chosen tool,
+select the new firmware file to upload and begin the upload.
 
 .. note::
 
@@ -122,33 +146,34 @@ firmware file to upload and begin the upload.
 List the images
 ===============
 
-A list of images (slot-0 and slot-1) that are present can now be obtained on the remote target device using
-the tool of your choice, which should print the status and hash values of each of the images
-present.
+A list of images (slot-0 and slot-1) that are present can now be obtained on
+the remote target device using the tool of your choice, which should print
+the status and hash values of each of the images present.
 
 Test the image
 ==============
 
-In order to instruct MCUboot to swap the images, the image needs to be tested first, making sure it
-boots, see the instructions in the tool of your choice. Upon reboot, MCUBoot will swap to the new
-image.
+In order to instruct MCUboot to swap the images, the image needs to be tested
+first, making sure it boots, see the instructions in the tool of your choice.
+Upon reboot, MCUBoot will swap to the new image.
 
 .. note::
-   There is not yet any way of getting the image hash without actually uploading the
-   image and getting the hash.
+   There is not yet any way of getting the image hash without actually uploading
+   the image and getting the hash.
 
 Reset remotely
 ==============
 
-The device can be reset remotely to observe (use the console output) how MCUboot swaps the images,
-check the documentation in the tool of your choice. Upon reset MCUboot will swap slot-0 and
-slot-1.
+The device can be reset remotely to observe (use the console output) how MCUboot
+swaps the images, check the documentation in the tool of your choice.
+Upon reset MCUboot will swap slot-0 and slot-1.
 
 Confirm new image
 =================
 
-The new image is now loaded into slot-0, but it will be swapped back into slot-1 on the next
-reset unless the image is confirmed. Confirm the image using the tool of your choice.
+The new image is now loaded into slot-0, but it will be swapped back into slot-1
+on the next reset unless the image is confirmed. Confirm the image using
+the tool of your choice.
 
 Note that if you try to send the very same image that is already flashed in
 slot-0 then the procedure will not complete successfully since the hash values

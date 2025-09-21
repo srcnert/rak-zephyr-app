@@ -12,6 +12,10 @@
 #include <zephyr/logging/log.h>
 LOG_MODULE_REGISTER(rak_adc, LOG_LEVEL_DBG);
 
+#if defined(CONFIG_BOARD_RAK3112)
+double correction_ratio = 1.1;
+#endif
+
 #if defined(CONFIG_BOARD_RAK3172)
 double correction_ratio = 1.1;
 #endif
