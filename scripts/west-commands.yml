@@ -4,3 +4,8 @@ west-commands:
       - name: hello_world
         class: HelloWorld
         help: Sample west custom command
+  - file: scripts/west_commands/patch_rak.py
+    commands:
+      - name: patch_rak
+        class: PatchRak
+        help: patch_rak west subprojects

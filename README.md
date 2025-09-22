@@ -70,13 +70,13 @@ To patch addressed issues, run the following command:
 
 ```shell
 cd rak-zephyr-app
-west -v patch apply
+west patch_rak
 ```
 
 To revert applied patches:
 
 ```shell
-west -v patch clean
+west patch_rak --revert
 ```
 
 To list patch files:

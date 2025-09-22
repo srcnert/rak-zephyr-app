@@ -96,7 +96,7 @@
         {
             "id": "runner_type",
             "type": "pickString",
-            "description": "Select the build type:",
+            "description": "Select the runner type:",
             "options": ["esp32","jlink"]
         },
         {

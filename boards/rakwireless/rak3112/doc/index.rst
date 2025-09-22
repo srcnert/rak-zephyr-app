@@ -70,8 +70,9 @@ Building & Flashing
 Simple boot
 ===========
 
-The board could be loaded using the single binary image, without 2nd stage bootloader.
-It is the default option when building the application without additional configuration.
+The board could be loaded using the single binary image, without 2nd stage
+bootloader. It is the default option when building the application without
+additional configuration.
 
 .. note::
 
@@ -80,8 +81,9 @@ It is the default option when building the application without additional config
 Manual build
 ============
 
-During the development cycle, it is intended to build & flash as quickly possible.
-For that reason, images can be built once at a time using traditional build.
+During the development cycle, it is intended to build & flash as quickly
+possible. For that reason, images can be built once at a time using traditional
+build.
 
 Build and flash applications as usual (see :ref:`build_an_application` and
 :ref:`application_run` for more details).
