@@ -98,6 +98,7 @@
                         "app/lora/sleep_test/build/zephyr/zephyr.elf",
                         "app/modem/cellular/build/zephyr/zephyr.elf",
                         "app/modem/sleep_test/build/zephyr/zephyr.elf",
+                        "app/net/wifi_shell/build/zephyr/zephyr.elf",
                         "app/sensor/rak1901/build/zephyr/zephyr.elf",
                         "app/sensor/rak1904/build/zephyr/zephyr.elf",
                     ]
