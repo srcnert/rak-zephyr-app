@@ -4,6 +4,7 @@ tests:
   sample.basic.dfu.uart:
     platform_allow:
       - rak3172
+      - rak11160
     extra_args: EXTRA_CONF_FILE=overlay_mcuboot.conf
     sysbuild: true
     tags: rak

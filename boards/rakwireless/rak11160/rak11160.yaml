@@ -1,5 +1,5 @@
 identifier: rak11160
-name: RAK3172 LoRa STM32WL
+name: RAK11160
 type: mcu
 arch: arm
 toolchain:

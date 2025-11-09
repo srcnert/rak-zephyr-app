@@ -71,7 +71,7 @@ int main(void)
 		for (size_t i = 0U; i < ARRAY_SIZE(adc_channels); i++) {
 			int32_t val;
 
-#if defined(CONFIG_BOARD_RAK3172)
+#if defined(CONFIG_BOARD_RAK3172) || defined(CONFIG_BOARD_RAK11160)
 			LOG_INF("Calibrate ADC");
 			sequence.calibrate = true;
 #endif
@@ -112,7 +112,7 @@ int main(void)
 				   (3.0));
 #endif
 
-#if defined(CONFIG_BOARD_RAK3172)
+#if defined(CONFIG_BOARD_RAK3172) || defined(CONFIG_BOARD_RAK11160)
 			bat_lvl = ((vref * (((double)val) / ((double)pow(2, resolution))) * (5.0)) /
 				   (3.0));
 #endif

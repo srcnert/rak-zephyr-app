@@ -54,6 +54,17 @@ Building for rak4631
    :goals: build flash
    :west-args: --no-sysbuild
 
+Building for rak11160
+---------------------
+
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/lora/lora_shell
+   :board: rak11160
+   :goals: build flash
+   :west-args: --no-sysbuild
+
 Building for rak11720
 ---------------------
 

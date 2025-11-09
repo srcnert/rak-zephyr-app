@@ -15,7 +15,7 @@ This application can be built and executed as follows:
 Building for rak3112
 --------------------
 
-:zephyr:board:`rak3172` as follows:
+:zephyr:board:`rak3112` as follows:
 
 .. zephyr-app-commands::
    :zephyr-app: app/lora/sleep_test
@@ -46,6 +46,18 @@ Building for rak4631
    :goals: build flash
    :west-args: --no-sysbuild
    :gen-args: -DEXTRA_CONF_FILE="overlay_ble.conf;overlay_sleep_rak4631.conf"
+
+Building for rak11160
+---------------------
+
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/lora/sleep_test
+   :board: rak11160
+   :goals: build flash
+   :west-args: --no-sysbuild
+   :gen-args: -DEXTRA_CONF_FILE="overlay_sleep_rak3172.conf"
 
 Building for rak11720
 ---------------------

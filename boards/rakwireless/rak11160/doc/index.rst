@@ -1,10 +1,10 @@
-.. zephyr:board:: rak3112
+.. zephyr:board:: rak11160
 
 Overview
 ********
 
 RAK11160 is a WisDuo module based on the STM32WLE5 MCU with integrated LoRa
-transceiver. It uses an Espressif ESP8684 co-processor to support Bluetooth 5.0
+transceiver. It uses an Espressif ESP8684H2 co-processor to support Bluetooth
 and WiFi connectivity. This module is ideal for various IoT applications such as
 home automation, sensor networks, building automation, and other IoT network
 applications.

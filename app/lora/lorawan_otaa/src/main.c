@@ -8,6 +8,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/devicetree.h>
 #include <zephyr/drivers/gpio.h>
+#include <zephyr/drivers/regulator.h>
 #include <zephyr/settings/settings.h>
 
 #include "rak_adc.h"
@@ -28,11 +29,26 @@ LOG_MODULE_REGISTER(main, LOG_LEVEL_DBG);
  */
 static const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(DT_ALIAS(green_led), gpios);
 
+#if defined(CONFIG_BOARD_RAK11160)
+/*
+ * Get ESP enable regulator
+ */
+static const struct device *esp = DEVICE_DT_GET(DT_NODELABEL(esp8684_enable));
+#endif
+
 int main(void)
 {
 	int ret;
 
-#if defined(CONFIG_BOARD_RAK3172)
+#if defined(CONFIG_BOARD_RAK11160)
+	// Suspend ESP MCU
+	ret = regulator_disable(esp);
+	if (ret) {
+		LOG_ERR("Failed to suspend esp: %d", ret);
+	}
+#endif
+
+#if defined(CONFIG_BOARD_RAK3172) || defined(CONFIG_BOARD_RAK11160)
 	rak_lp_console_init();
 #endif
 

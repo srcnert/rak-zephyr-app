@@ -49,8 +49,19 @@ Building for rak5010
 :zephyr:board:`rak5010` as follows:
 
 .. zephyr-app-commands::
-   :zephyr-app: app/basic/adc
+   :zephyr-app: app/basic/blinky
    :board: rak5010
+   :goals: build flash
+   :west-args: --no-sysbuild
+
+Building for rak11160
+---------------------
+
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/basic/blinky
+   :board: rak11160
    :goals: build flash
    :west-args: --no-sysbuild
 

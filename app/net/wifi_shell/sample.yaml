@@ -4,5 +4,6 @@ tests:
   sample.wifi.wifi_shell:
     platform_allow:
       - rak3112/esp32s3/procpu
+      - rak11160
     tags: rak
     build_only: true

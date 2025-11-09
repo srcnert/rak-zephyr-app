@@ -5,6 +5,7 @@ tests:
     platform_allow:
       - rak3172
       - rak4631
+      - rak11160
     tags: rak
     build_only: true
   sample.basic.uart_sleep.ble:

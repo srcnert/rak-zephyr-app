@@ -4,13 +4,6 @@
 		zephyr,shell-uart = &lpuart1;
 	};
 
-	chip_en: chip_en {
-		compatible = "regulator-fixed";
-		regulator-name = "chip_en";
-		enable-gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
-		regulator-boot-on;
-	};
-
 	aliases {
 		blue-led = &blue_led;
 		green-led = &green_led;
@@ -22,16 +15,4 @@
 	pinctrl-names = "default";
 	current-speed = <115200>;
 	status = "okay";
-};
-
-&usart1 {
-	status = "okay";
-	current-speed = <115200>;
-	pinctrl-0 = <&usart1_tx_pb6 &usart1_rx_pb7>;
-	pinctrl-names = "default";
-
-	esp8684 {
-		compatible = "espressif,esp-at";
-		status = "okay";
-	};
 };
