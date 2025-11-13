@@ -138,6 +138,7 @@
                         "app/sensor/rak1901",
                         "app/sensor/rak1904",
                         "app/net/wifi_shell",
+                        "app/ai/neuton",
                     ]
         }
       ]
