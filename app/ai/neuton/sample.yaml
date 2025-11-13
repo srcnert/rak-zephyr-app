@@ -1,0 +1,9 @@
+sample:
+  name: Neuton-AI
+tests:
+  sample.neuton_ai:
+    platform_allow:
+      - rak4631
+      - rak11720
+    tags: rak
+    build_only: true
