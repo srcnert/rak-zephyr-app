@@ -88,8 +88,9 @@
 	status = "okay";
 	lora: radio@0 {
 		status = "okay";
-		tx-enable-gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>; /* FE_CTRL1 */
-		rx-enable-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;  /* FE_CTRL2 */
+		antenna-enable-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;
+		tx-enable-gpios = <&gpioc 13 GPIO_ACTIVE_HIGH>;
+		rx-enable-gpios = <&gpioc 13 GPIO_ACTIVE_LOW>;
 		dio3-tcxo-voltage = <SX126X_DIO3_TCXO_1V8>;
 		tcxo-power-startup-delay-ms = <5>;
 		power-amplifier-output = "rfo-hp";
