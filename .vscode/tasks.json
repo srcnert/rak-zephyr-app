@@ -132,6 +132,7 @@
                         "app/basic/uart_sleep",
                         "app/lora/lora_shell",
                         "app/lora/lorawan_otaa",
+                        "app/lora/lora_test",
                         "app/lora/sleep_test",
                         "app/modem/cellular",
                         "app/modem/sleep_test",

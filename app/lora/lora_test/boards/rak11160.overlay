@@ -1,0 +1,26 @@
+/ {
+	chosen {
+		zephyr,console = &lpuart1;
+		zephyr,shell-uart = &lpuart1;
+	};
+
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+	};
+};
+
+&usart1 {
+	status = "disabled";
+};
+
+&usart2 {
+	status = "disabled";
+};
+
+&lpuart1 {
+	pinctrl-0 = <&lpuart1_tx_pa2 &lpuart1_rx_pa3>;
+	pinctrl-names = "default";
+	current-speed = <115200>;
+	status = "okay";
+};
