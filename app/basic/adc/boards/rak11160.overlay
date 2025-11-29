@@ -1,0 +1,22 @@
+/ {
+	zephyr,user {
+		io-channels = <&adc1 2>; // PB3
+	};
+};
+
+&adc1 {
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
+	st,adc-clock-source = "SYNC";
+	st,adc-prescaler = <4>;
+	pinctrl-0 = <&adc_in2_pb3>;
+	pinctrl-names = "default";
+	channel@2 {
+		reg = <2>;
+		zephyr,gain = "ADC_GAIN_1";
+		zephyr,reference = "ADC_REF_INTERNAL";
+		zephyr,acquisition-time = <ADC_ACQ_TIME_MAX>;
+		zephyr,resolution = <12>;
+	};
+};

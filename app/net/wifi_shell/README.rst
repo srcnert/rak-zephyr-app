@@ -17,15 +17,28 @@ Building and Running
 
 Verify the board and chip you are targeting provide Wi-Fi support.
 
+
+Building for rak3112
+--------------------
+
+:zephyr:board:`rak3112` as follows:
+
 .. zephyr-app-commands::
-   :zephyr-app: app/net/wifi_shell
+   :zephyr-app: app/net/wife_shell
    :board: rak3112/esp32s3/procpu
-   :goals: build
-   :compact:
+   :goals: build flash
+   :west-args: --no-sysbuild
 
-.. code-block:: shell
+Building for rak11160
+---------------------
 
-   west espressif monitor
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/net/wife_shell
+   :board: rak11160
+   :goals: build flash
+   :west-args: --no-sysbuild
 
 After the board has automatically reset and booted, you should see the following
 message in the monitor:

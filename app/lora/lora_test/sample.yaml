@@ -1,0 +1,12 @@
+sample:
+  name: Power Test
+tests:
+  sample.lora.lora_test:
+    platform_allow:
+      - rak3112/esp32s3/procpu
+      - rak3172
+      - rak4631
+      - rak11160
+      - rak11720
+    tags: rak
+    build_only: true

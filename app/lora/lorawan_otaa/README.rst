@@ -12,7 +12,8 @@ at every three minutes periodically with following json format:
 
 It is also possible to use mcuboot bootloader with using ``--sysbuild`` arg.
 RAK3112 and RAK4631 are able to update over USB/Bluetooth and RAK11720 is able
-to update over just Bluetooth. The RAK3172 is able to update over just UART.
+to update over just Bluetooth. The RAK3172 and RAK11160 is able to update over
+just UART.
 
 The sample also must reach lowest idle current.
 
@@ -29,7 +30,7 @@ The following commands build and flash the sample.
 Building for rak3112
 --------------------
 
-:zephyr:board:`3112` as follows:
+:zephyr:board:`rak3112` as follows:
 
 .. zephyr-app-commands::
    :zephyr-app: app/lora/lorawan_otaa
@@ -61,6 +62,18 @@ Building for rak4631
    :goals: build flash
    :west-args: --sysbuild
    :gen-args: -DEXTRA_CONF_FILE="overlay_ble.conf;overlay_mcuboot.conf;overlay_sleep_rak4631.conf"
+
+Building for rak11160
+---------------------
+
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/lora/lorawan_otaa
+   :board: rak11160
+   :goals: build flash
+   :west-args: --sysbuild
+   :gen-args: -DEXTRA_CONF_FILE="overlay_mcuboot.conf;overlay_sleep_rak3172.conf"
 
 Building for rak11720
 ---------------------

@@ -60,6 +60,17 @@ Building for rak5010
    :goals: build flash
    :west-args: --no-sysbuild
 
+Building for rak11160
+---------------------
+
+:zephyr:board:`rak11160` as follows:
+
+.. zephyr-app-commands::
+   :zephyr-app: app/sensor/rak1901
+   :board: rak11160
+   :goals: build flash
+   :west-args: --no-sysbuild
+
 Building for rak11720
 ---------------------
 

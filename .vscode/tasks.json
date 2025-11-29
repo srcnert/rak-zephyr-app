@@ -85,7 +85,7 @@
             "id": "board_select",
             "type": "pickString",
             "description": "Select the board:",
-            "options": ["rak3112/esp32s3/procpu","rak3172", "rak4631", "rak5010", "rak11720"]
+            "options": ["rak3112/esp32s3/procpu","rak3172", "rak4631", "rak5010", "rak11160", "rak11720"]
         },
         {
             "id": "build_type",
@@ -132,6 +132,7 @@
                         "app/basic/uart_sleep",
                         "app/lora/lora_shell",
                         "app/lora/lorawan_otaa",
+                        "app/lora/lora_test",
                         "app/lora/sleep_test",
                         "app/modem/cellular",
                         "app/modem/sleep_test",

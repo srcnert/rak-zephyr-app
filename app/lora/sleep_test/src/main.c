@@ -2,6 +2,7 @@
 #include <zephyr/kernel.h>
 #include <zephyr/drivers/gpio.h>
 #include <zephyr/drivers/lora.h>
+#include <zephyr/drivers/regulator.h>
 #include <zephyr/irq.h>
 
 #if defined(CONFIG_BOARD_RAK3112)
@@ -47,6 +48,13 @@ static void led_init()
 	}
 }
 
+#if defined(CONFIG_BOARD_RAK11160)
+/*
+ * Get ESP8684 enable regulator
+ */
+static const struct device *esp = DEVICE_DT_GET(DT_NODELABEL(esp8684_enable));
+#endif
+
 /*
  * Get LoRa device
  */
@@ -59,6 +67,14 @@ int main(void)
 	if (ret) {
 		LOG_ERR("Failed to init ble peripheral: %d", ret);
 		return -1;
+	}
+#endif
+
+#if defined(CONFIG_BOARD_RAK11160)
+	// Suspend ESP MCU
+	int ret = regulator_disable(esp);
+	if (ret) {
+		LOG_ERR("Failed to suspend esp: %d", ret);
 	}
 #endif
 

@@ -11,6 +11,7 @@ tests:
   sample.lora.lorawan_otaa.rak3172:
     platform_allow:
       - rak3172
+      - rak11160
     extra_args: EXTRA_CONF_FILE=overlay_mcuboot.conf;overlay_sleep_rak3172.conf
     sysbuild: true
     tags: rak

@@ -1,0 +1,19 @@
+/ {
+	chosen {
+		zephyr,console = &uart0;
+		zephyr,shell-uart = &uart0;
+	};
+
+	aliases {
+		blue-led = &blue_led;
+		green-led = &green_led;
+	};
+};
+
+&iom1 {
+	spi1: spi {
+		lora: lora@0 {
+			antenna-enable-gpios = <&gpio0_31 18 GPIO_ACTIVE_HIGH>;
+		};
+	};
+};
