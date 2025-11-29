@@ -34,12 +34,12 @@
 		};
 	};
 
-	/* regulator controlling ESPC2 enable */
+	/* regulator controlling ESP8684 enable */
 	esp8684_enable: esp8684-enable {
 		compatible = "regulator-fixed";
 		regulator-name = "esp8684_enable";
 		enable-gpios = <&gpioa 0 GPIO_ACTIVE_HIGH>;
-		regulator-boot-on;
+		regulator-boot-off;
 	};
 
 	aliases {
@@ -47,12 +47,6 @@
 		lora0 = &lora;
 		watchdog0 = &iwdg;
 	};
-};
-
-&lptim1 {
-	clocks = <&rcc STM32_CLOCK_BUS_APB1 0x80000000>,
-		 <&rcc STM32_SRC_LSE LPTIM1_SEL(3)>;
-	status = "okay";
 };
 
 &pll {
@@ -86,6 +80,7 @@
 
 &subghzspi {
 	status = "okay";
+
 	lora: radio@0 {
 		status = "okay";
 		antenna-enable-gpios = <&gpiob 8 GPIO_ACTIVE_HIGH>;

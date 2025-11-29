@@ -38,27 +38,10 @@ Supported Features
 
 .. zephyr:board-supported-hw::
 
-Prerequisites
--------------
-
-To use ESP8684 coprocessor of Espressif HAL requires WiFi and Bluetooth binary
-blobs in order work. Run the command below to retrieve those files.
-
-.. code-block:: console
-
-   west blobs fetch hal_espressif
-
-.. note::
-
-It is recommended running the command above after :file:`west update`.
-
 Building & Flashing
 *******************
 
 .. zephyr:board-supported-runners::
-
-Flashing an application
------------------------
 
 Connect the board to your host computer and build and flash an application.
 The sample application :zephyr:code-sample:`hello_world` is used for this example.
