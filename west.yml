@@ -8,11 +8,13 @@ manifest:
   remotes:
     - name: zephyrproject-rtos
       url-base: https://github.com/zephyrproject-rtos
+    - name: rak-fork
+      url-base: https://github.com/srcnert
 
   projects:
     - name: zephyr
-      remote: zephyrproject-rtos
-      revision: v4.4.1
+      remote: rak-fork
+      revision: main
       import:
         # By using name-allowlist we can clone only the modules that are
         # strictly needed by the wisblock-for-zephyr applications.
