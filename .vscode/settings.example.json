@@ -11,7 +11,7 @@
   /* Environment variables */
   "ZEPHYR_BASE": "${config:ZEPHYR_WORKSPACE}/zephyr",
   "ZEPHYR_TOOLCHAIN_VARIANT": "zephyr",
-  "ZEPHYR_SDK_INSTALL_DIR": "${config:TOOLCHAIN_BASE}/opt/zephyr-sdk/gnu",
+  "ZEPHYR_SDK_INSTALL_DIR": "${config:TOOLCHAIN_BASE}/opt/zephyr-sdk",
 
   /* Terminal paths */
   "terminal.integrated.env.windows": {

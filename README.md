@@ -90,15 +90,19 @@ west patch list
 ```
 
 ### Building and running
-To build an application, open '../wisblock-zephyr-workspace/wisblock-for-zephyr' directory on your Visual Studio Code app. After that, please open '../.vscode/settings.json' file and set following parameters:
+To build an application, open '../wisblock-zephyr-workspace/wisblock-for-zephyr' directory on your Visual Studio Code app.
 
-```shell
+'.vscode/settings.json' is not tracked by git. Create it from the template file which is '.vscode/settings.example.json' and name it as 'vscode/settings.json'.
+
+After that, please open '../.vscode/settings.json' file and set following parameters:
+
+```jsonc
 "ZEPHYR_WORKSPACE": "/your/path/to/wisblock-zephyr-workspace",
 
-"TOOLCHAIN_BASE":   "/your/path/to/toolchains/0123456789",
-"JLINK_PATH":       "/your/path/to/JLink_V123",
-"MCUMGR_PATH":      "/your/path/to/go/bin"
-"OPENOCD_PATH":     "/your/path/to/xpack-openocd-<version>"
+"TOOLCHAIN_BASE": "/your/path/to/toolchains/0123456789",
+"JLINK_PATH":     "/your/path/to/JLink_V123",
+"MCUMGR_PATH":    "/your/path/to/go/bin",
+"OPENOCD_PATH":   "/your/path/to/xpack-openocd-<version>/bin",
 ```
 
 *** McuMgr is necessary to use mcumgr commands. Please check dfu application for details.
@@ -137,7 +141,7 @@ OPENOCD and GDB tools are used. Please check Digikey video (https://www.youtube.
 Please also take a look for detailed information:
 https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/api-guides/jtag-debugging/index.html
 
-Shortly, OPENOCD (https://github.com/xpack-dev-tools/openocd-xpack/releases) must be installed for your operating system. There is no installer for it and you just unzip it to appropriate location and please open '../.vscode/settings.json' file and set 'OPENOCD_PATH' parameter.
+Shortly, OPENOCD (https://github.com/xpack-dev-tools/openocd-xpack/releases) must be installed for your operating system. There is no installer for it and you just unzip it to appropriate location and please open '../.vscode/settings.json' file and set 'OPENOCD_PATH' parameter to its 'bin' folder (e.g. "/your/path/to/xpack-openocd-<version>/bin").
 
 If you are Mac OS user, you must go to Settings of your Mac and then Privacy&Security section. After that, run "openocd --version" command continuously and then click OPEN ANYWAY button on Privacy&Security section. The reason is that some openocd files was blocked by OS to protect your Mac. The aim is to give permision to all related openocd exes.
 

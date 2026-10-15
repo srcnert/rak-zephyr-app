@@ -1,6 +1,7 @@
 # editors
 *.swp
 *~
+.vscode/settings.json
 
 # python
 .venv
