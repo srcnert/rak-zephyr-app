@@ -15,25 +15,3 @@
 &uart1 {
 	status = "disabled";
 };
-
-&pinctrl {
-	uart0_default: uart0_default {
-		group1 {
-			pinmux = <UART0TX_P39>;
-		};
-		group2 {
-			pinmux = <UART0RX_P40>;
-			input-enable;
-		};
-	};
-	uart0_sleep: uart0_sleep {
-		group1 {
-			pinmux = <UART0TX_P39>;
-			low-power-enable;
-		};
-		group2 {
-			pinmux = <UART0RX_P40>;
-			low-power-enable;
-		};
-	};
-};
